@@ -1,37 +1,36 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">GOES-X</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿@using GOES_X.Model;
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
+<div class="@Style navbar">
+    <h2>GOES-X</h2>
+    <h4>Geographic coverage</h4>
+    <select @bind="@Settings.GeographicCoverage">
+        @foreach (var coverage in Enum.GetValues(typeof(GeographicCoverage)))
+        {
+            <option value="@coverage">@coverage</option>
+        }
+    </select>
+    <h3>Data Timings</h3>
+    <input type="checkbox" name="realtime" bind="@Settings.DataTimings.Realtime"/>
+    <Checkbox></Checkbox>
+    <h3>Products</h3>
+    <ul>
+        <li></li>
     </ul>
+    <button>+</button>
+    <h3>Animation Manager</h3>
+    <h4>Number of frames</h4>
+    <select @bind="@Settings.Animation.NumberOfFrames">
+    </select>
+    <h4>Intra-frame time</h4>
+    <select @bind="@Settings.Animation.IntraFrameTime">
+    </select>
+    <button>Save the animation</button>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+    [ParameterAttribute]
+    public string Style { get; set; }
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    public RuntimeSettings Settings {get; set;} = new RuntimeSettings();
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
