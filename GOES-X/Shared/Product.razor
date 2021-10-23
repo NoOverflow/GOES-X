@@ -1,0 +1,64 @@
+@inject IJSRuntime JS
+
+<div @onmousedown=OnProgressBarMouseDown
+    @onmouseup=OnProgressBarMouseUp @onmouseout=OnProgressBarMouseOut
+    @onmousemove=OnProgressBarMouseMove @ref=TopBar
+      id="outer-pgbar">
+    <p id="inner-text" onselectstart="return false;" ondragstart="return false;">@Value.Name</p>
+    <button id="info">i</button>
+    <div style="width: @Progress%;" id="inner-pgbar">
+
+    </div>
+</div>
+
+@code {
+    public class BoundingClientRect
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double Top { get; set; }
+        public double Right { get; set; }
+        public double Bottom { get; set; }
+        public double Left { get; set; }
+    }
+
+    [Parameter]
+    public Model.Product Value { get; set; }
+
+    public double Progress => Value.Opacity * 100;
+
+    public bool Dragging = false;
+
+    ElementReference TopBar;
+
+    public void OnProgressBarMouseOut()
+    {
+        Dragging = false;
+    }
+
+    public void OnProgressBarMouseUp()
+    {
+        Dragging = false;
+    }
+
+    public async void OnProgressBarMouseDown(MouseEventArgs e)
+    {
+        Dragging = true;
+        var result = await JS.InvokeAsync<BoundingClientRect>("MyDOMGetBoundingClientRect", TopBar);
+        var x = (int) (e.ClientX - result.Left);
+
+        Value.Opacity = (e.ClientX - result.Left) / result.Width;
+    }
+
+    public async void OnProgressBarMouseMove(MouseEventArgs e)
+    {
+        if (!Dragging)
+            return;
+        var result = await JS.InvokeAsync<BoundingClientRect>("MyDOMGetBoundingClientRect", TopBar);
+        var x = (int) (e.ClientX - result.Left);
+
+        Value.Opacity = (e.ClientX - result.Left) / result.Width;
+    }
+}

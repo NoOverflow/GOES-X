@@ -8,12 +8,6 @@ namespace GOES_X.Model
     }
 
     [Serializable]
-    public class Product
-    {
-        public double Opacity { get; set; }
-    }
-
-    [Serializable]
     public class DataTimings
     {
         public bool Realtime { get; set; }

@@ -4,14 +4,14 @@
     height: 100%;
     right: 0px;
     top: 0px;
-    background-color: pink;
+    background-color: transparent;
+    backdrop-filter: blur(25px);
     z-index: 1;
 }
 
 h2 {
     left: 26px;
-    top: 21px;
-
+    margin-top: 10px;
     font-style: normal;
     font-weight: normal;
     font-size: 36px;
@@ -21,8 +21,9 @@ h2 {
 h4 {
     font-style: normal;
     font-weight: normal;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 10px;
 }
 
 .container input {
@@ -98,3 +99,122 @@ h4 {
     color: white;
 }
 
+.separator {
+    width: 100%;
+    height: 0px;
+    margin-bottom: 10px;
+    border: 1px solid #434343;
+}
+
+::deep #realtime-checkbox {
+    margin-left: 20px;
+}
+
+.sett-select {
+    background-color: transparent;
+    width: 100%;
+    border: 1px solid rgba(74, 74, 74, 1);
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 2px;
+    text-indent: 12px;
+}
+
+.small-select {
+    height: 39px;
+}
+
+.big-select {
+    height: 59px;
+}
+
+.sett-button {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    color: #B7B7B7;
+    text-align: center;
+    width: 100%;
+    color: white;
+    background: rgba(114, 114, 114, 0.33);
+    border-color: transparent;
+    border-style: 1px solid;
+    border-radius: 8px;
+    height: 30px;
+}
+
+#data-timings {
+    margin-top: 19px;
+    margin-bottom: 32px;
+}
+
+#products {
+    margin-bottom: 30px;
+}
+
+ul {
+    width: 100%;
+    padding: 0;
+}
+
+li {
+    width: 100%;
+    list-style: none;
+}
+
+.horizontal-separator {
+    width: 31px;
+    height: 0px;
+    border: 1px solid #434343;
+    margin: 0px 12px 0px 12px;
+}
+
+#timing-interval {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 26px;
+}
+
+::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 2px;
+    opacity: 0.6;
+    filter: invert(0.8);
+}
+
+::-webkit-calendar-picker-indicator:hover {
+    opacity: 1
+}
+
+.date-picker {
+    display: inline;
+    width: 207px;
+    height: 59px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #4A4A4A;
+    border-radius: 4px;
+}
+
+#numframes-select {
+    margin-top: 16px;
+    margin-bottom: 13px;
+}
+
+#iframe-time-select {
+    margin-top: 16px;
+    margin-bottom: 25px;
+}

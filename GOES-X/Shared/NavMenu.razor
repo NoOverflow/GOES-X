@@ -3,34 +3,58 @@
 <div class="@Style navbar">
     <h2>GOES-X</h2>
     <h4>Geographic coverage</h4>
-    <select @bind="@Settings.GeographicCoverage">
+    <select class="sett-select big-select" @bind="@Settings.GeographicCoverage">
         @foreach (var coverage in Enum.GetValues(typeof(GeographicCoverage)))
         {
             <option value="@coverage">@coverage</option>
         }
     </select>
-    <h3>Data Timings</h3>
-    <input type="checkbox" name="realtime" bind="@Settings.DataTimings.Realtime"/>
-    <Checkbox></Checkbox>
-    <h3>Products</h3>
-    <ul>
-        <li></li>
-    </ul>
-    <button>+</button>
-    <h3>Animation Manager</h3>
-    <h4>Number of frames</h4>
-    <select @bind="@Settings.Animation.NumberOfFrames">
-    </select>
-    <h4>Intra-frame time</h4>
-    <select @bind="@Settings.Animation.IntraFrameTime">
-    </select>
-    <button>Save the animation</button>
+
+    <div id="data-timings">
+        <h3>Data Timings</h3>
+        <div class="separator"></div>
+        <Checkbox id="realtime-checkbox" LabelCheckbox="Realtime" Checked="@Settings.DataTimings.Realtime"></Checkbox>
+        <div id="timing-interval">
+            <input type="datetime-local" class="date-picker"
+                name="meeting-time" value="2018-06-12T19:30"/>
+            <div class="horizontal-separator"></div>
+            <input type="datetime-local" class="date-picker"
+                name="meeting-time" value="2018-06-12T19:30"/>
+        </div>
+    </div>
+
+    <div id="products">
+        <h3>Products</h3>
+        <div class="separator"></div>
+        <ul>
+            <li><Product Value=@TestProduct></Product></li>
+        </ul>
+        <button class="sett-button">+</button>
+    </div>
+
+    <div id="animation">
+        <h3>Animation Manager</h3>
+        <div class="separator"></div>
+        <h4>Number of frames</h4>
+        <select class="sett-select small-select" id="numframes-select" @bind="@Settings.Animation.NumberOfFrames">
+        </select>
+        <h4>Intra-frame time</h4>
+        <select class="sett-select small-select" id="iframe-time-select" @bind="@Settings.Animation.IntraFrameTime">
+        </select>
+        <button class="sett-button">Save the animation</button>
+    </div>
 </div>
 
 @code {
     [ParameterAttribute]
     public string Style { get; set; }
 
+    public Model.Product TestProduct { get; set; } = new Model.Product {
+        Name = "Band #8 - Upper Troposphere WV",
+        Opacity = 0.5,
+        BestSpatialResolution = 1,
+        CentralWaveLength = 6.2F
+    };
     public RuntimeSettings Settings {get; set;} = new RuntimeSettings();
 
 }

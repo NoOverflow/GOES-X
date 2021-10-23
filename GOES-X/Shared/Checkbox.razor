@@ -1,4 +1,15 @@
-<label class="container">One
-  <input type="checkbox" checked="checked">
+<label id="@id" class="container">@LabelCheckbox
+  <input type="checkbox" checked="@Checked">
   <span class="checkmark"></span>
 </label>
+
+@code {
+    [Parameter]
+    public string LabelCheckbox {get; set;}
+
+    [Parameter]
+    public bool Checked {get; set;}
+
+    [Parameter]
+    public string id {get; set;}
+}
