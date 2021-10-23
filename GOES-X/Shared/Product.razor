@@ -27,7 +27,7 @@
     [Parameter]
     public Model.Product Value { get; set; }
 
-    public double Progress => Value.Opacity * 100;
+    public string Progress => (Value.Opacity * 100).ToString().Replace(",", ".");
 
     public bool Dragging = false;
 
