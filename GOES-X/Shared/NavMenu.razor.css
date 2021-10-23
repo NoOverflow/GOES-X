@@ -103,7 +103,7 @@ h4 {
     width: 100%;
     height: 0px;
     margin-bottom: 10px;
-    border: 1px solid #434343;
+    border: 1px outset #434343a8;
 }
 
 ::deep #realtime-checkbox {
