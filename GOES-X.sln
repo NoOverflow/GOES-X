@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOES-X", "GOES-X\GOES-X.csproj", "{6608E698-8628-4B3E-83FB-4D02FA1DABBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOES-I", "GOES-I\GOES-I.csproj", "{2B0EA12C-F360-4230-9DE8-59685A4FD73D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOES-I", "GOES-I\GOES-I.csproj", "{2B0EA12C-F360-4230-9DE8-59685A4FD73D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOES-ITest", "GOES-ITest\GOES-ITest.csproj", "{802C61AB-47A9-4A68-A1FB-B96362817C78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOES-ITest", "GOES-ITest\GOES-ITest.csproj", "{802C61AB-47A9-4A68-A1FB-B96362817C78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

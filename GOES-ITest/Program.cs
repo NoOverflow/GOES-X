@@ -4,25 +4,57 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
 
 namespace GOES_ITest
 {
     class Program
     {
-        private async Task Test()
+        private async Task TestSatelliteStatus()
+        {
+
+        }
+
+        private async Task TestColor()
         {
             AmazonS3Client client = new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1);
             S3ProductQueryier pqueryier = new S3ProductQueryier(client);
-            List<S3Object> rawObjects = await pqueryier.ListRawProducts(pqueryier.GetS3Prefix("ABI-L1b-RadF", DateTime.Now.AddDays(-1)));
-            // Get the first product from band 01
-            string key = rawObjects.Find(x => x.Key.Contains("C01")).Key;
+            List<S3Object> rawObjects = await pqueryier.ListRawProducts(pqueryier.GetS3Prefix("ABI-L2-MCMIPF", DateTime.Now.AddDays(-1)));
+        
+            string key = rawObjects[0].Key;
+            key = "ABI-L2-MCMIPF_2021_353_19_OR_ABI-L2-MCMIPF-M6_G16_s20213531900206_e20213531909519_c20213531910018.nc";
+            Product product = await pqueryier.GetProduct(key);
+
+            short[,] rawR = (short[,])product.InternalDataSet["CMI_C02"].GetData();
+            short[,] rawG = (short[,])product.InternalDataSet["CMI_C03"].GetData();
+            short[,] rawB = (short[,])product.InternalDataSet["CMI_C01"].GetData();
+            double[,] r = new double[rawG.GetLength(0), rawG.GetLength(1)];
+            double[,] g = new double[rawG.GetLength(0), rawG.GetLength(1)];
+            double[,] b = new double[rawG.GetLength(0), rawG.GetLength(1)];
             
-            await pqueryier.GetRawProduct(key);
+            
+            float rScaleFactor = (float)product.InternalDataSet["CMI_C02"].Metadata["scale_factor"];
+            float bScaleFactor = (float)product.InternalDataSet["CMI_C03"].Metadata["scale_factor"];
+            float gScaleFactor = (float)product.InternalDataSet["CMI_C01"].Metadata["scale_factor"];
+
+            for (int y = 0; y < rawG.GetLength(0); y++)
+            {
+                for (int x = 0; x < rawG.GetLength(1); x++)
+                {
+                    r[y, x] = (double)(rawR[y, x] * rScaleFactor);
+                    b[y, x] = (double)(rawB[y, x] * bScaleFactor);
+
+                    g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor));
+                }
+            }
+            GOES_I.Utils.ImageUtils.CreateRGBImage(r, g, b, gamma: 1.8, -1).Save("colored_image.png", ImageFormat.Png);
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            new Program().Test().Wait();
+            await new Program().TestColor();
         }
     }
 }

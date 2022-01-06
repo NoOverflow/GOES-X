@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Amazon;
@@ -28,12 +29,15 @@ namespace GOES_I
                 time.Hour);
         }
 
-        public async Task GetRawProduct(string key)
+        public async Task<Product> GetProduct(string key)
         {
-            var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
+            key = "ABI-L2-MCMIPF_2021_353_19_OR_ABI-L2-MCMIPF-M6_G16_s20213531900206_e20213531909519_c20213531910018.nc";
+            /*var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
 
             Console.WriteLine("Raw Product returned: StatusCode:" + result.HttpStatusCode + " Content-Length: " + result.ContentLength);
-            await result.WriteResponseStreamToFileAsync("test_product.nc", false, new System.Threading.CancellationToken());
+            if (!File.Exists(String.Format("{0}", key.Replace("/", "_"))))
+                await result.WriteResponseStreamToFileAsync(String.Format("{0}", key.Replace("/", "_")), false, new System.Threading.CancellationToken());*/
+            return new Product(String.Format("{0}", key.Replace("/", "_")));
         }
 
         public async Task<List<S3Object>> ListRawProducts(string prefix = "")
