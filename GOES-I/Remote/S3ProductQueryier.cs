@@ -53,13 +53,6 @@ namespace GOES_I
             do
             {
                 listResponse = await Client.ListObjectsAsync(listRequest);
-                /*foreach (S3Object obj in listResponse.S3Objects)
-                {
-                    Console.WriteLine("Object - " + obj.Key);
-                    Console.WriteLine(" Size - " + obj.Size);
-                    Console.WriteLine(" LastModified - " + obj.LastModified);
-                    Console.WriteLine(" Storage class - " + obj.StorageClass);
-                }*/
                 retObjects.AddRange(listResponse.S3Objects);
                 listRequest.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);

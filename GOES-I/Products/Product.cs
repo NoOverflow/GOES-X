@@ -6,6 +6,7 @@ using System.Text;
 using GOES_I.Utils;
 using Microsoft.Research;
 using Microsoft.Research.Science.Data.NetCDF4;
+using Serilog;
 
 namespace GOES_I
 {
@@ -13,24 +14,14 @@ namespace GOES_I
     {
         public NetCDFDataSet InternalDataSet { get; set; }
 
-
         public Product(string path)
         {
             this.InternalDataSet = new NetCDFDataSet(path);
-            
-            Console.WriteLine("[Debug - DataSet]");
-            Console.WriteLine("    - Name: " + this.InternalDataSet.Name);
-            Console.WriteLine("    [Dimensions]");
-            foreach (var dimension in this.InternalDataSet.Dimensions)
-            {
-                Console.WriteLine("        - " + dimension.Name);
-            }
-            Console.WriteLine("    [Variables]");
-            foreach (var variable in this.InternalDataSet.Variables)
-            {
-                Console.WriteLine("        - " + variable.Name);
-            }
-            // this.Radiances = (short[,])(this.InternalDataSet["Rad"].GetData());
+
+            Log.Logger.Debug("Successfully loaded product,\n\t- Name: {0}\n\t- Dimensions array count: {1}\n\t- Variables array count: {2}",
+                this.InternalDataSet.Name,
+                this.InternalDataSet.Dimensions.Count,
+                this.InternalDataSet.Variables.Count);
         }
     }
 }

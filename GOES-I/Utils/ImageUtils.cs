@@ -4,6 +4,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Linq;
+using Serilog.Core;
+using Serilog;
+using System.Diagnostics;
 
 namespace GOES_I.Utils
 {
@@ -11,6 +14,10 @@ namespace GOES_I.Utils
     {
         public static Image CreateRGBImage(double[,] R, double[,] G, double[,] B, double gamma = 2.2, double? transparencyKey = null)
         {
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+            Log.Logger.Debug("Creating RGB image, gamma={0} transparency_key={1}", gamma, transparencyKey);
             double rMin = R.Cast<double>().Min();
             rMin = Math.Clamp((double)rMin, (double)0, (double)255);
             double rMax = R.Cast<double>().Max();
@@ -75,11 +82,17 @@ namespace GOES_I.Utils
                 }
             }
             bm.UnlockBits(bd);
+            sw.Stop();
+            Log.Logger.Debug("RGB image built in {0}ms", sw.ElapsedMilliseconds);
             return bm;
         }
 
         public static Image CreateImage(double[,] data, Color? baseColor = null, double? transparencyKey = null)
         {
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+            Log.Logger.Debug("Creating grayscale image, transparency_key={1}", transparencyKey);
             double min = data.Cast<double>().Min();
             double max = data.Cast<double>().Max();
             double range = (byte)(max - min);
@@ -110,6 +123,8 @@ namespace GOES_I.Utils
                 }
             }
             bm.UnlockBits(bd);
+            sw.Stop();
+            Log.Logger.Debug("RGB image built in {0}ms", sw.ElapsedMilliseconds);
             return bm;
         }
     }

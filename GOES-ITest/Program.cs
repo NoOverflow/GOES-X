@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using GOES_I.Logging;
 
 namespace GOES_ITest
 {
@@ -45,7 +46,6 @@ namespace GOES_ITest
                 {
                     r[y, x] = (double)(rawR[y, x] * rScaleFactor);
                     b[y, x] = (double)(rawB[y, x] * bScaleFactor);
-
                     g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor));
                 }
             }
@@ -54,6 +54,7 @@ namespace GOES_ITest
 
         static async Task Main(string[] args)
         {
+            Logger.Init();
             await new Program().TestColor();
         }
     }
