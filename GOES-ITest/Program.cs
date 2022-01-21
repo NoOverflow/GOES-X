@@ -23,10 +23,8 @@ namespace GOES_ITest
             AmazonS3Client client = new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1);
             S3ProductQueryier pqueryier = new S3ProductQueryier(client);
             List<S3Object> rawObjects = await pqueryier.ListRawProducts(pqueryier.GetS3Prefix("ABI-L2-MCMIPF", DateTime.Now.AddDays(-1)));
-        
             string key = rawObjects[0].Key;
-            key = "ABI-L2-MCMIPF_2021_353_19_OR_ABI-L2-MCMIPF-M6_G16_s20213531900206_e20213531909519_c20213531910018.nc";
-            Product product = await pqueryier.GetProduct(key);
+            Product product = await pqueryier.GetProduct(key, "");
 
             short[,] rawR = (short[,])product.InternalDataSet["CMI_C02"].GetData();
             short[,] rawG = (short[,])product.InternalDataSet["CMI_C03"].GetData();
@@ -55,7 +53,11 @@ namespace GOES_ITest
         static async Task Main(string[] args)
         {
             Logger.Init();
-            await new Program().TestColor();
+            Program program = new Program();
+            AmazonS3Client client = new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1);
+            QueryService queryService = new QueryService(client);
+
+            queryService.Start();
         }
     }
 }

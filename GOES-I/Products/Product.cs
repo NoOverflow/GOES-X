@@ -10,6 +10,57 @@ using Serilog;
 
 namespace GOES_I
 {
+    public enum GoesProductFullDisk
+    {
+        /*// ABI L1b
+        RadC,
+        RadF,
+        RadM,
+        // ABI L2
+        ACHAC,
+        ACHAF,
+        ACHAM,
+        ACHTF,
+        ACHTM,
+        ACMC,
+        ACMF,
+        ACMM,
+        ACTPC,
+        ACTPF,
+        ACTPM,
+        ADPC,
+        ADPF,
+        ADPM,
+        AICEF,
+        AITAF,
+        AODC,
+        AODF,
+        BRFC,
+        BRFF,
+        BRFM*/
+
+    }
+
+    public enum GoesChannel
+    {
+        Blue = 1,
+        Red = 2,
+        Veggie = 3,
+        Cirrus = 4,
+        Snow = 5,
+        CloudParticleSize = 6,
+        Shortwave = 7,
+        UprLevelWaterVapor = 8,
+        MidLevelWaterVapor = 9,
+        LwrLevelWaterVapor = 10,
+        CloudTopPhase = 11,
+        Ozone = 12,
+        CleanLWW = 13,
+        LWW = 14,
+        DirtyLWW = 15,
+        CO2LWW = 16
+    }
+
     public class Product
     {
         public NetCDFDataSet InternalDataSet { get; set; }

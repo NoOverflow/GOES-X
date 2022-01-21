@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Serilog;
 
 namespace GOES_I
 {
@@ -13,6 +14,7 @@ namespace GOES_I
     {
         public AmazonS3Client Client { get; set; }
 
+        // TODO Add support for other satellites
         private const string GOES_16_BUCKET = "noaa-goes16";
 
         public S3ProductQueryier(AmazonS3Client Client)
@@ -22,22 +24,27 @@ namespace GOES_I
 
         public string GetS3Prefix(string productName, DateTime time)
         {
-            return String.Format("{0}/{1}/{2:000}/{3:00}", 
-                productName, 
-                time.Year, 
+            return String.Format("{0}/{1}/{2:000}/{3:00}",
+                productName,
+                time.Year,
                 time.DayOfYear,
                 time.Hour);
         }
 
-        public async Task<Product> GetProduct(string key)
+        /// <summary>
+        /// Get a raw product from the S3 bucket
+        /// </summary>
+        /// <param name="key">S3 Product key</param>
+        /// <param name="path">The path to which the product will be saved</param>
+        /// <returns></returns>
+        public async Task<Product> GetProduct(string key, string path)
         {
-            key = "ABI-L2-MCMIPF_2021_353_19_OR_ABI-L2-MCMIPF-M6_G16_s20213531900206_e20213531909519_c20213531910018.nc";
-            /*var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
+            var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
 
-            Console.WriteLine("Raw Product returned: StatusCode:" + result.HttpStatusCode + " Content-Length: " + result.ContentLength);
+            Log.Logger.Debug("S3 Query, Key={0} StatusCode={1}", key, result.HttpStatusCode);
             if (!File.Exists(String.Format("{0}", key.Replace("/", "_"))))
-                await result.WriteResponseStreamToFileAsync(String.Format("{0}", key.Replace("/", "_")), false, new System.Threading.CancellationToken());*/
-            return new Product(String.Format("{0}", key.Replace("/", "_")));
+                await result.WriteResponseStreamToFileAsync(path, false, new System.Threading.CancellationToken());
+            return new Product(String.Format("{0}", path));
         }
 
         public async Task<List<S3Object>> ListRawProducts(string prefix = "")
