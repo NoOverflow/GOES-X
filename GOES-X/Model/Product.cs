@@ -9,7 +9,7 @@ namespace GOES_X.Model
         /// <summary>
         /// The GOES Product index based on GOES-R series satellite specifications
         /// </summary>
-        public GoesProduct ProductIndex { get; set; }
+        public GoesProductFullDisk ProductIndex { get; set; }
 
         /// <summary>
         /// User-friendly product name
