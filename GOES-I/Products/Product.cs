@@ -10,12 +10,13 @@ using Serilog;
 
 namespace GOES_I
 {
-    public enum GoesProductFullDisk
+    public enum GoesProduct
     {
-        /*// ABI L1b
+        // ABI L1b
         RadC,
         RadF,
         RadM,
+
         // ABI L2
         ACHAC,
         ACHAF,
@@ -37,8 +38,13 @@ namespace GOES_I
         AODF,
         BRFC,
         BRFF,
-        BRFM*/
-
+        BRFM,
+        CMIPC,
+        CMIPF,
+        CMIPM,
+        MCMIPC,
+        MCMIPF,
+        MCMIPM,
     }
 
     public enum GoesChannel
@@ -64,8 +70,9 @@ namespace GOES_I
     public class Product
     {
         public NetCDFDataSet InternalDataSet { get; set; }
+        public GoesProduct GoesProductFullDisk { get; set; }
 
-        public Product(string path)
+        public Product(GoesProduct type, string path)
         {
             this.InternalDataSet = new NetCDFDataSet(path);
 

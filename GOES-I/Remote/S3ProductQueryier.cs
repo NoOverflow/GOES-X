@@ -37,14 +37,16 @@ namespace GOES_I
         /// <param name="key">S3 Product key</param>
         /// <param name="path">The path to which the product will be saved</param>
         /// <returns></returns>
-        public async Task<Product> GetProduct(string key, string path)
+        public async Task<Product> GetProduct(GoesProduct type, string key, string path)
         {
             var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
 
-            Log.Logger.Debug("S3 Query, Key={0} StatusCode={1}", key, result.HttpStatusCode);
-            if (!File.Exists(String.Format("{0}", key.Replace("/", "_"))))
+            Log.Logger.Debug("S3 Query, Key={0} StatusCode={1} CachePath={2}", key, result.HttpStatusCode, path);
+            if (!File.Exists(path))
                 await result.WriteResponseStreamToFileAsync(path, false, new System.Threading.CancellationToken());
-            return new Product(String.Format("{0}", path));
+            else
+                Log.Logger.Warning("Tried to download a file that already existed: {0}", path);
+            return new Product(type, path);
         }
 
         public async Task<List<S3Object>> ListRawProducts(string prefix = "")

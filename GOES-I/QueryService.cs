@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using GOES_I.EndUserProducts;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace GOES_I
         /// The time span for which the query service will get the data
         /// TODO: Make this a setting
         /// </summary>
-        public TimeSpan QueryTimeSpan { get; set; } = TimeSpan.FromDays(10);
+        public TimeSpan QueryTimeSpan { get; set; } = TimeSpan.FromHours(2);
 
         /// <summary>
         /// The timespan added to the CurrentQueryTime on each request, 
@@ -43,12 +44,14 @@ namespace GOES_I
         private string StoragePath;
 
         private AmazonS3Client AwsClient;
+        private S3ProductQueryier ProductQueryier { get; set; }
 
         public QueryService(AmazonS3Client awsClient, string? absoluteStoragePath = null)
         {
             this.AwsClient = awsClient;
+            this.ProductQueryier = new S3ProductQueryier(this.AwsClient);
             if (absoluteStoragePath == null)
-                StoragePath = absoluteStoragePath = AppDomain.CurrentDomain.BaseDirectory + "/storage";
+                StoragePath = absoluteStoragePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "storage");
             if (!Directory.Exists(absoluteStoragePath))
                 Directory.CreateDirectory(absoluteStoragePath);
         }
@@ -58,16 +61,15 @@ namespace GOES_I
         /// </summary>
         /// <param name="timemark">The timestamp</param>
         /// <returns>True if we have all data</returns>
-        private bool IsTimemarkComplete(DateTime timemark)
+        private bool IsCacheComplete(DateTime timemark)
         {
-            string timePath = Path.Combine(StoragePath, 
-                String.Format("{0}/{1}/{2}", 
-                    timemark.Year, 
-                    timemark.DayOfYear, 
-                    timemark.Hour));
+            string timePath = GetCachePath(timemark);
 
-            if (!Directory.Exists(StoragePath + "/" + timePath + "/"))
+            if (!Directory.Exists(timePath))
                 return false;
+
+
+
             // TODO: We can't do that, some products are only available at different intervals
             // 
             /*foreach (GoesChannel product in Enum.GetValues(typeof(GoesChannel)))
@@ -85,23 +87,55 @@ namespace GOES_I
 
         private async Task<bool> TimemarkExists(string product, DateTime timemark)
         {
-            string path = BuildS3Path(product, timemark);
-            ListObjectsResponse response = await AwsClient.ListObjectsAsync(path);
+            try
+            {
+                string path = ProductQueryier.GetS3Prefix(product, timemark);
+                List<S3Object> objects = await ProductQueryier.ListRawProducts(path);
 
-            if (response.HttpStatusCode != System.Net.HttpStatusCode.OK)
+                return objects.Count > 0;
+            }
+            catch (Exception ex)
+            {
                 return false;
-            return response.S3Objects.Count > 0;
+            }
         }
 
-        private string BuildS3Path(string product, DateTime timestamp)
+        private string GetCachePath(DateTime timemark)
         {
-            return $"{product}/{timestamp.Year}/{timestamp.DayOfYear}/{timestamp.Hour}/";
+            return Path.Combine(StoragePath,
+                String.Format("{0}/{1}/{2}",
+                    timemark.Year,
+                    timemark.DayOfYear,
+                    timemark.Hour));
+        }
+
+        private async Task TimemarkCacheDownload(DateTime timemark)
+        {
+            string cachePath = GetCachePath(timemark);
+
+            // TODO: Loop over all products
+            
+            // TODO: Get multiple files
+            var objects = await ProductQueryier.ListRawProducts(ProductQueryier.GetS3Prefix("ABI-L2-MCMIPF", timemark));
+            
+            if (objects.Count == 0)
+            {
+                Log.Logger.Warning("QueryService: Tried to cache an empty product at timemark: {0}", timemark);
+                return;
+            }
+            
+            Product product = await ProductQueryier.GetProduct(GoesProduct.MCMIPF, objects[0].Key, Path.Combine(cachePath, "MCMIPF.nc"));
+
+            // TODO: Loop over multiple end products
+            // TODO: Get this from a factory or smth
+            await new BandsEndUserProduct().Process(cachePath);
+            Log.Logger.Information("EndUserProductService: Processed end user products.");
         }
 
         public void Start()
         {
             // TODO: Move to a thread
-            QueryLogic(new CancellationToken());
+            QueryLogic(new CancellationToken()).Wait();
         }
 
         public void Stop()
@@ -109,19 +143,46 @@ namespace GOES_I
 
         }
 
-        private async void QueryLogic(CancellationToken cancellationToken)
+        private async Task QueryLogic(CancellationToken cancellationToken)
         {
             // Backtrack from current -> current - QueryTimeSpan
             while (CurrentQueryTime >= StartQueryTime - QueryTimeSpan)
             {
-                if (!IsTimemarkComplete(CurrentQueryTime))
+                bool tmExists = await TimemarkExists("ABI-L1b-RadC", CurrentQueryTime);
+
+                if (!tmExists)
+                {
+                    Log.Logger.Information("QueryService: No data for timemark: {0}, skipping it.", CurrentQueryTime);
+                    CurrentQueryTime -= IncrementalTimeSpan;
+                    continue;
+                }
+
+                // TODO: Move to a thread
+                // TODO: Loop over multiple end products
+                BandsEndUserProduct endUserProduct = new BandsEndUserProduct();
+
+                if (endUserProduct.HasRequirements(GetCachePath(CurrentQueryTime)) 
+                    && !endUserProduct.IsProcessComplete(GetCachePath(CurrentQueryTime)))
+                {
+                    Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
+                    await endUserProduct.Process(GetCachePath(CurrentQueryTime));
+                }
+
+                if (!IsCacheComplete(CurrentQueryTime))
                 {
                     Log.Logger.Information("QueryService: Missing data from {0} {1}, downloading raw data", 
                         CurrentQueryTime.ToShortDateString(), 
                         CurrentQueryTime.ToShortTimeString());
+                    // Download it 
+                    await TimemarkCacheDownload(CurrentQueryTime);
+                } 
+                else
+                {
+                    Log.Logger.Information("QueryService: Got all data for timemark: {0}!", CurrentQueryTime);
                 }
                 CurrentQueryTime -= IncrementalTimeSpan;
             }
+
             Log.Logger.Information("QueryService: Now querying products since {0}",
                 StartQueryTime.ToShortDateString() + " - " + StartQueryTime.ToShortTimeString());
             CurrentQueryTime = StartQueryTime;
@@ -131,13 +192,14 @@ namespace GOES_I
                 {
                     bool tmExists = await TimemarkExists("ABI-L1b-RadC", CurrentQueryTime);
 
-                    if (!IsTimemarkComplete(CurrentQueryTime) && tmExists)
+                    if (!IsCacheComplete(CurrentQueryTime) && tmExists)
                     {
                         Log.Logger.Information("QueryService: Missing data from {0} {1}, downloading raw data",
                             CurrentQueryTime.ToShortDateString(),
                             CurrentQueryTime.ToShortTimeString()
                         );
                         // Download it
+                        await TimemarkCacheDownload(CurrentQueryTime);
                         CurrentQueryTime += IncrementalTimeSpan;
                     } 
                     else

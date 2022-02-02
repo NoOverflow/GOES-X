@@ -24,7 +24,7 @@ namespace GOES_ITest
             S3ProductQueryier pqueryier = new S3ProductQueryier(client);
             List<S3Object> rawObjects = await pqueryier.ListRawProducts(pqueryier.GetS3Prefix("ABI-L2-MCMIPF", DateTime.Now.AddDays(-1)));
             string key = rawObjects[0].Key;
-            Product product = await pqueryier.GetProduct(key, "");
+            Product product = await pqueryier.GetProduct(GoesProduct.MCMIPF, key, "");
 
             short[,] rawR = (short[,])product.InternalDataSet["CMI_C02"].GetData();
             short[,] rawG = (short[,])product.InternalDataSet["CMI_C03"].GetData();

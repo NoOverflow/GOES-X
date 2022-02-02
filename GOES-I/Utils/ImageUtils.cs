@@ -87,22 +87,26 @@ namespace GOES_I.Utils
             return bm;
         }
 
-        public static Image CreateImage(double[,] data, Color? baseColor = null, double? transparencyKey = null)
+        public static Image CreateImage(double[,] R, double gamma = 2.2, Color? baseColor = null, double? transparencyKey = null)
         {
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            Log.Logger.Debug("Creating grayscale image, transparency_key={1}", transparencyKey);
-            double min = data.Cast<double>().Min();
-            double max = data.Cast<double>().Max();
-            double range = (byte)(max - min);
-            byte v;
-            double sV;
+            Log.Logger.Debug("Creating RGB image, gamma={0} transparency_key={1}", gamma, transparencyKey);
 
-            Bitmap bm = new Bitmap(data.GetLength(0), data.GetLength(1));
+            double rMin = R.Cast<double>().Min();
+            rMin = Math.Clamp((double)rMin, (double)0, (double)255);
+            double rMax = R.Cast<double>().Max();
+            rMax = Math.Clamp((double)rMax, (double)0, (double)255);
+            double rRange = (double)(rMax - rMin);
+
+
+            byte rV;
+            double rsV;
+
+            Bitmap bm = new Bitmap(R.GetLength(0), R.GetLength(1));
             BitmapData bd = bm.LockBits(new Rectangle(0, 0, bm.Width, bm.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            baseColor ??= Color.White;
             unsafe
             {
                 byte* ptr = (byte*)bd.Scan0;
@@ -111,12 +115,18 @@ namespace GOES_I.Utils
                 {
                     for (int i = 0; i < bd.Width; i++)
                     {
-                        sV = data[i, bd.Height - 1 - j];
-                        v = (byte)(255 * (sV - min) / range);
-                        ptr[0] = (byte)(((float)baseColor.Value.B / 255) * v);
-                        ptr[1] = (byte)(((float)baseColor.Value.G / 255) * v);
-                        ptr[2] = (byte)(((float)baseColor.Value.R / 255) * v);
-                        ptr[3] = (byte)((transparencyKey == null) ? 255 : (sV == transparencyKey ? 0 : 255));
+                        rsV = R[i, bd.Height - 1 - j];
+
+                        rsV = (double)Math.Pow(rsV, 1 / gamma);
+
+                        rsV = (double)Math.Clamp((double)rsV, (double)0, (double)255);
+
+                        rV = (byte)(255 * (rsV - rMin) / rRange);
+
+                        ptr[0] = (byte)(rV);
+                        ptr[1] = (byte)(rV);
+                        ptr[2] = (byte)(rV);
+                        ptr[3] = (byte)((transparencyKey == null) ? 255 : (rV == transparencyKey ? 0 : 255));
                         ptr += 4;
                     }
                     ptr += (bd.Stride - (bd.Width * 4));
@@ -124,7 +134,7 @@ namespace GOES_I.Utils
             }
             bm.UnlockBits(bd);
             sw.Stop();
-            Log.Logger.Debug("RGB image built in {0}ms", sw.ElapsedMilliseconds);
+            Log.Logger.Debug("Gscale image built in {0}ms", sw.ElapsedMilliseconds);
             return bm;
         }
     }
