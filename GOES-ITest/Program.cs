@@ -56,8 +56,11 @@ namespace GOES_ITest
             Program program = new Program();
             AmazonS3Client client = new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1);
             QueryService queryService = new QueryService(client);
-
-            queryService.Start();
+            IUserService userService = new UserService();
+            // queryService.Start();
+            var test = userService.GetEndUserProduct("Bands", DateTime.UtcNow);
+            Console.ReadLine();
+            queryService.Stop();
         }
     }
 }
