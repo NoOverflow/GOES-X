@@ -27,7 +27,7 @@ namespace GOES_I.EndUserProducts
             for (int y = 0; y < rad.GetLength(0); y++)
                 for (int x = 0; x < rad.GetLength(1); x++)
                     rad[y, x] = rawRad[y, x];
-            Utils.ImageUtils.CreateImage(rad, gamma: 2.2, transparencyKey: -1).Save(Path.Combine(storagePath, $"Band{bandIndex}.png"), ImageFormat.Png);
+            Utils.ImageUtils.CreateImage(rad, gamma: 1.6, transparencyKey: -1).Save(Path.Combine(storagePath, $"Band{bandIndex}.png"), ImageFormat.Png);
         }
 
         public bool IsProcessComplete(string basePath)
