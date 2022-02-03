@@ -17,7 +17,7 @@ namespace GOES_I
     /// into the filesystem, this allows us to deliver user-ready data without having to parse it
     /// on every request.
     /// </summary>
-    public class QueryService
+    public class QueryService : IQueryService
     {
         /// <summary>
         /// The current query time, this will go back in time as we get more data
@@ -41,10 +41,20 @@ namespace GOES_I
         /// <summary>
         /// The storage path, we don't use a database because the filesystem will do for now.
         /// </summary>
-        private string StoragePath;
+        public static string StoragePath;
 
         private AmazonS3Client AwsClient;
         private S3ProductQueryier ProductQueryier { get; set; }
+
+        /// <summary>
+        /// The thread hosting the query logic task
+        /// </summary>
+        private Thread QueryLogicThread = null;
+
+        /// <summary>
+        /// The cancellation token for the query logic
+        /// </summary>
+        private CancellationTokenSource QueryLogicCancellationTokenSource = new CancellationTokenSource();
 
         public QueryService(AmazonS3Client awsClient, string? absoluteStoragePath = null)
         {
@@ -100,7 +110,7 @@ namespace GOES_I
             }
         }
 
-        private string GetCachePath(DateTime timemark)
+        public static string GetCachePath(DateTime timemark)
         {
             return Path.Combine(StoragePath,
                 String.Format("{0}/{1}/{2}",
@@ -135,12 +145,20 @@ namespace GOES_I
         public void Start()
         {
             // TODO: Move to a thread
-            QueryLogic(new CancellationToken()).Wait();
+            QueryLogicThread = new Thread(async () =>
+            {
+                await QueryLogic(QueryLogicCancellationTokenSource.Token);
+            });
+
+            QueryLogicThread.Priority = ThreadPriority.BelowNormal;
+            QueryLogicThread.Name = "Query Logic Thread";
+            QueryLogicThread.Start();
         }
 
         public void Stop()
         {
-
+            QueryLogicCancellationTokenSource.Cancel();
+            QueryLogicThread.Abort();
         }
 
         private async Task QueryLogic(CancellationToken cancellationToken)
@@ -148,7 +166,7 @@ namespace GOES_I
             // Backtrack from current -> current - QueryTimeSpan
             while (CurrentQueryTime >= StartQueryTime - QueryTimeSpan)
             {
-                bool tmExists = await TimemarkExists("ABI-L1b-RadC", CurrentQueryTime);
+                bool tmExists = await TimemarkExists("ABI-L2-MCMIPF", CurrentQueryTime);
 
                 if (!tmExists)
                 {
@@ -185,12 +203,12 @@ namespace GOES_I
 
             Log.Logger.Information("QueryService: Now querying products since {0}",
                 StartQueryTime.ToShortDateString() + " - " + StartQueryTime.ToShortTimeString());
-            CurrentQueryTime = StartQueryTime;
+            CurrentQueryTime = StartQueryTime + IncrementalTimeSpan;
             while (!cancellationToken.IsCancellationRequested)
             {
                 while (CurrentQueryTime < DateTime.UtcNow + IncrementalTimeSpan)
                 {
-                    bool tmExists = await TimemarkExists("ABI-L1b-RadC", CurrentQueryTime);
+                    bool tmExists = await TimemarkExists("ABI-L2-MCMIPF", CurrentQueryTime);
 
                     if (!IsCacheComplete(CurrentQueryTime) && tmExists)
                     {

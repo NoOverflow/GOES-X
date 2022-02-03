@@ -37,5 +37,11 @@ namespace GOES_I.EndUserProducts
         /// <param name="rawProductsPath"></param>
         /// <returns></returns>
         public bool HasRequirements(string rawProductsPath);
+
+        /// <summary>
+        /// Get the end user product values from the times path
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, object> Get(string rawProductsPath);
     }
 }

@@ -62,5 +62,15 @@ namespace GOES_I.EndUserProducts
         {
             return File.Exists(Path.Combine(rawProductsPath, "MCMIPF.nc"));
         }
+
+        public Dictionary<string, object> Get(string rawProductsPath)
+        {
+            string path = Path.Combine(rawProductsPath, Name);
+            Dictionary<string, object> result = new Dictionary<string, object>();
+
+            for (short i = 1; i <= 16; i++)
+                result.Add($"Band{i}", Path.Combine(path, $"Band{i}.png"));
+            return result;
+        }
     }
 }
