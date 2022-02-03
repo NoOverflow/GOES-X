@@ -1,12 +1,15 @@
 .navbar {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
     position: absolute;
     width: 539px;
-    height: 100%;
     right: 0px;
     top: 0px;
     background-color: transparent;
     backdrop-filter: blur(25px);
     z-index: 1;
+    border-radius: 0 0 10px 10px;
 }
 
 h2 {
@@ -48,7 +51,7 @@ h4 {
 }
 
 .show {
-    display: inline;
+    display: flex;
 }
 
 .top-row {
@@ -217,4 +220,8 @@ li {
 #iframe-time-select {
     margin-top: 16px;
     margin-bottom: 25px;
+}
+
+#animation {
+    margin-bottom: 15px;
 }
