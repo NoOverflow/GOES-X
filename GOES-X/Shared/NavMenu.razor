@@ -1,4 +1,6 @@
 ﻿@using GOES_X.Model;
+@using GOES_X.Services
+@inject UserPreferencesService UserPrefsService
 
 <div class="@Style navbar">
     <h2>GOES-X</h2>
@@ -26,6 +28,12 @@
     <div id="products">
         <h3>Products</h3>
         <div class="separator"></div>
+        <select @bind="UserPrefsService.BandSelected">
+            @for (var i = 1; i <= 16; i++)
+            {
+                <option value="@i">Band @i</option>
+            }
+        </select>
         <ul>
             <li><Product Value=@TestProduct></Product></li>
         </ul>
@@ -50,7 +58,7 @@
     public string Style { get; set; }
 
     public Model.Product TestProduct { get; set; } = new Model.Product {
-        Name = "Band #8 - Upper Troposphere WV",
+        Name = "Band",
         Opacity = 0.5,
         BestSpatialResolution = 1,
         CentralWaveLength = 6.2F

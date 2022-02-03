@@ -1,29 +1,44 @@
 ﻿@page "/"
+@using GOES_X.Services
 @using static GOES_X.Shared.NavMenu
+@inject UserPreferencesService UserPreferencesService
 
 <div class="topbar">
     <h1>@SatelliteName</h1>
-    <div id="temp-visualizer">
-        <!-- <img src="https://img.generation-nt.com/0001644501.jpg" />  -->
-    </div>
-
-    <button @onclick="ToggleMenu" id="menu_button">
+    
+    <button @onclick="ToggleMenu" id="menu-button">
         <svg width="30" height="23" viewBox="0 0 30 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="30" height="3" fill="#FFF"/>
             <rect y="10" width="30" height="3" fill="#FFF"/>
             <rect y="20" width="30" height="3" fill="#FFF"/>
         </svg>
     </button>
-    <NavMenu Style="@MenuStyleCSS" />
 </div>
 
+<NavMenu Style="@MenuStyleCSS" />
+
+<div id="temp-visualizer">
+    <img src="@BandSelectedUrl"/>
+</div>
 
 @code {
     // Dynamic CSS
     public bool MenuVisible = false;
     public string MenuStyleCSS => (MenuVisible ? "show" : "collapse");
-
+    public static DateTime EupTimestamp = DateTime.UtcNow.AddHours(-1);
     public string SatelliteName { get; set; } = "GOES 17";
+
+    public string BandSelectedUrl = $"https://localhost:7097/api/eup?eupName=Bands&key=Band1&timestamp={EupTimestamp.Ticks}";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        UserPreferencesService.OnUserPreferencesUpdate += () =>
+        {
+            BandSelectedUrl = $"https://localhost:7097/api/eup?eupName=Bands&key=Band{UserPreferencesService.BandSelected}&timestamp={EupTimestamp.Ticks}";
+            InvokeAsync(() => StateHasChanged());
+        };
+    }
 
     private void ToggleMenu()
     {

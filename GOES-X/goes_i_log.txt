@@ -1,0 +1,205 @@
+2022-02-03 13:02:58.127 +01:00 [INF] Started GOES-I, 03/02/2022 13:02
+2022-02-03 13:02:59.485 +01:00 [INF] QueryService: No data for timemark: "2022-02-03T12:02:58.3744234Z", skipping it.
+2022-02-03 13:02:59.647 +01:00 [INF] QueryService: Missing data from 03/02/2022 11:02, downloading raw data
+2022-02-03 13:03:00.056 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/034/11/OR_ABI-L2-MCMIPF-M6_G16_s20220341100210_e20220341109529_c20220341110018.nc StatusCode="OK" CachePath=E:\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/34/11\MCMIPF.nc
+2022-02-03 13:11:09.104 +01:00 [INF] Started GOES-I, 03/02/2022 13:11
+2022-02-03 13:11:10.384 +01:00 [INF] QueryService: Missing data from 03/02/2022 12:11, downloading raw data
+2022-02-03 13:11:10.728 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/034/12/OR_ABI-L2-MCMIPF-M6_G16_s20220341200210_e20220341209529_c20220341210023.nc StatusCode="OK" CachePath=E:\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/34/12\MCMIPF.nc
+2022-02-03 13:12:52.834 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:12:52.871 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:12:53.660 +01:00 [DBG] Creating RGB image, gamma=2.2 transparency_key=-1
+2022-02-03 13:12:59.525 +01:00 [DBG] Gscale image built in 5865ms
+2022-02-03 13:13:00.713 +01:00 [DBG] Creating RGB image, gamma=2.2 transparency_key=-1
+2022-02-03 13:13:06.757 +01:00 [DBG] Gscale image built in 6044ms
+2022-02-03 13:13:08.280 +01:00 [DBG] Creating RGB image, gamma=2.2 transparency_key=-1
+2022-02-03 13:13:15.997 +01:00 [DBG] Gscale image built in 7716ms
+2022-02-03 13:13:17.348 +01:00 [DBG] Creating RGB image, gamma=2.2 transparency_key=-1
+2022-02-03 13:13:57.447 +01:00 [INF] Started GOES-I, 03/02/2022 13:13
+2022-02-03 13:13:58.689 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-03 13:13:58.971 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:13:59.905 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:06.035 +01:00 [DBG] Gscale image built in 6130ms
+2022-02-03 13:14:07.005 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:12.839 +01:00 [DBG] Gscale image built in 5833ms
+2022-02-03 13:14:14.186 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:21.784 +01:00 [DBG] Gscale image built in 7598ms
+2022-02-03 13:14:23.158 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:30.348 +01:00 [DBG] Gscale image built in 7190ms
+2022-02-03 13:14:31.695 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:38.105 +01:00 [DBG] Gscale image built in 6410ms
+2022-02-03 13:14:39.218 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:46.271 +01:00 [DBG] Gscale image built in 7053ms
+2022-02-03 13:14:47.370 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:14:54.149 +01:00 [DBG] Gscale image built in 6779ms
+2022-02-03 13:14:55.255 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:15:02.452 +01:00 [DBG] Gscale image built in 7196ms
+2022-02-03 13:15:03.490 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:15:10.092 +01:00 [DBG] Gscale image built in 6602ms
+2022-02-03 13:15:11.040 +01:00 [DBG] Creating RGB image, gamma=5 transparency_key=-1
+2022-02-03 13:15:54.583 +01:00 [INF] Started GOES-I, 03/02/2022 13:15
+2022-02-03 13:15:55.819 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-03 13:15:56.164 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:15:57.092 +01:00 [DBG] Creating RGB image, gamma=1 transparency_key=-1
+2022-02-03 13:16:02.872 +01:00 [DBG] Gscale image built in 5780ms
+2022-02-03 13:16:03.986 +01:00 [DBG] Creating RGB image, gamma=1 transparency_key=-1
+2022-02-03 13:16:09.658 +01:00 [DBG] Gscale image built in 5671ms
+2022-02-03 13:16:11.718 +01:00 [DBG] Creating RGB image, gamma=1 transparency_key=-1
+2022-02-03 13:16:35.397 +01:00 [INF] Started GOES-I, 03/02/2022 13:16
+2022-02-03 13:16:36.589 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-03 13:16:36.848 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:16:38.026 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:16:44.151 +01:00 [DBG] Gscale image built in 6125ms
+2022-02-03 13:16:45.474 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:16:51.238 +01:00 [DBG] Gscale image built in 5763ms
+2022-02-03 13:16:52.518 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:16:58.235 +01:00 [DBG] Gscale image built in 5716ms
+2022-02-03 13:16:59.484 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:05.146 +01:00 [DBG] Gscale image built in 5662ms
+2022-02-03 13:17:06.418 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:12.471 +01:00 [DBG] Gscale image built in 6052ms
+2022-02-03 13:17:13.738 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:19.394 +01:00 [DBG] Gscale image built in 5656ms
+2022-02-03 13:17:20.647 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:26.551 +01:00 [DBG] Gscale image built in 5903ms
+2022-02-03 13:17:27.931 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:34.173 +01:00 [DBG] Gscale image built in 6242ms
+2022-02-03 13:17:35.133 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:42.378 +01:00 [DBG] Gscale image built in 7245ms
+2022-02-03 13:17:43.874 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:17:51.754 +01:00 [DBG] Gscale image built in 7880ms
+2022-02-03 13:17:53.244 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:18:00.321 +01:00 [DBG] Gscale image built in 7077ms
+2022-02-03 13:18:02.132 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:18:10.125 +01:00 [DBG] Gscale image built in 7992ms
+2022-02-03 13:18:11.859 +01:00 [DBG] Creating RGB image, gamma=1.8 transparency_key=-1
+2022-02-03 13:18:24.136 +01:00 [INF] Started GOES-I, 03/02/2022 13:18
+2022-02-03 13:18:25.478 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-03 13:18:25.880 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:18:26.858 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:18:33.166 +01:00 [DBG] Gscale image built in 6307ms
+2022-02-03 13:18:34.785 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:18:40.764 +01:00 [DBG] Gscale image built in 5978ms
+2022-02-03 13:18:42.283 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:18:49.279 +01:00 [DBG] Gscale image built in 6996ms
+2022-02-03 13:18:50.821 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:18:57.611 +01:00 [DBG] Gscale image built in 6790ms
+2022-02-03 13:18:59.016 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:05.661 +01:00 [DBG] Gscale image built in 6644ms
+2022-02-03 13:19:07.021 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:12.862 +01:00 [DBG] Gscale image built in 5840ms
+2022-02-03 13:19:14.447 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:21.058 +01:00 [DBG] Gscale image built in 6610ms
+2022-02-03 13:19:22.360 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:30.371 +01:00 [DBG] Gscale image built in 8011ms
+2022-02-03 13:19:31.734 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:39.513 +01:00 [DBG] Gscale image built in 7779ms
+2022-02-03 13:19:40.797 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:47.489 +01:00 [DBG] Gscale image built in 6691ms
+2022-02-03 13:19:48.666 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:19:55.632 +01:00 [DBG] Gscale image built in 6965ms
+2022-02-03 13:19:57.117 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:20:04.450 +01:00 [DBG] Gscale image built in 7332ms
+2022-02-03 13:20:06.331 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:20:13.459 +01:00 [DBG] Gscale image built in 7128ms
+2022-02-03 13:20:15.271 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:20:23.651 +01:00 [DBG] Gscale image built in 8379ms
+2022-02-03 13:20:25.352 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:20:32.527 +01:00 [DBG] Gscale image built in 7174ms
+2022-02-03 13:20:34.253 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:20:42.352 +01:00 [DBG] Gscale image built in 8099ms
+2022-02-03 13:20:42.996 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:18:24.4777503Z"!
+2022-02-03 13:20:48.323 +01:00 [INF] QueryService: Missing data from 03/02/2022 11:18, downloading raw data
+2022-02-03 13:20:48.828 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/034/11/OR_ABI-L2-MCMIPF-M6_G16_s20220341100210_e20220341109529_c20220341110018.nc StatusCode="OK" CachePath=E:\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/34/11\MCMIPF.nc
+2022-02-03 13:22:31.779 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:22:31.827 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-03 13:22:32.587 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:22:38.928 +01:00 [DBG] Gscale image built in 6340ms
+2022-02-03 13:22:40.151 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:22:46.240 +01:00 [DBG] Gscale image built in 6088ms
+2022-02-03 13:22:47.554 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:22:54.346 +01:00 [DBG] Gscale image built in 6791ms
+2022-02-03 13:22:55.625 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:01.453 +01:00 [DBG] Gscale image built in 5827ms
+2022-02-03 13:23:02.690 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:08.903 +01:00 [DBG] Gscale image built in 6213ms
+2022-02-03 13:23:10.281 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:16.692 +01:00 [DBG] Gscale image built in 6410ms
+2022-02-03 13:23:17.907 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:24.057 +01:00 [DBG] Gscale image built in 6149ms
+2022-02-03 13:23:25.339 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:31.798 +01:00 [DBG] Gscale image built in 6459ms
+2022-02-03 13:23:32.964 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:39.568 +01:00 [DBG] Gscale image built in 6603ms
+2022-02-03 13:23:40.974 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:47.670 +01:00 [DBG] Gscale image built in 6696ms
+2022-02-03 13:23:48.935 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:23:55.205 +01:00 [DBG] Gscale image built in 6269ms
+2022-02-03 13:23:56.708 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:24:03.647 +01:00 [DBG] Gscale image built in 6939ms
+2022-02-03 13:24:05.131 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:24:11.424 +01:00 [DBG] Gscale image built in 6293ms
+2022-02-03 13:24:12.966 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:24:19.800 +01:00 [DBG] Gscale image built in 6833ms
+2022-02-03 13:24:21.335 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:24:28.520 +01:00 [DBG] Gscale image built in 7185ms
+2022-02-03 13:24:30.578 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-03 13:24:37.817 +01:00 [DBG] Gscale image built in 7239ms
+2022-02-03 13:24:38.627 +01:00 [INF] EndUserProductService: Processed end user products.
+2022-02-03 13:24:38.630 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 12:18
+2022-02-03 13:29:30.405 +01:00 [INF] Started GOES-I, 03/02/2022 13:29
+2022-02-03 13:29:31.620 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:29:30.6781856Z"!
+2022-02-03 13:29:31.858 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T11:29:30.6781856Z"!
+2022-02-03 13:29:31.862 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 12:29
+2022-02-03 14:11:03.902 +01:00 [INF] Started GOES-I, 03/02/2022 14:11
+2022-02-03 14:11:04.837 +01:00 [INF] QueryService: Missing data from 03/02/2022 13:11, downloading raw data
+2022-02-03 14:11:05.099 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/034/13/OR_ABI-L2-MCMIPF-M6_G16_s20220341300210_e20220341309518_c20220341310021.nc StatusCode="OK" CachePath=E:\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/34/13\MCMIPF.nc
+2022-02-03 14:16:09.193 +01:00 [INF] Started GOES-I, 03/02/2022 14:16
+2022-02-03 14:16:10.120 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-03 14:16:40.639 +01:00 [INF] Started GOES-I, 03/02/2022 14:16
+2022-02-03 14:16:41.747 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:16:40.8024542Z"!
+2022-02-03 14:16:41.876 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:16:40.8024542Z"!
+2022-02-03 14:16:41.878 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:16
+2022-02-03 14:19:51.191 +01:00 [INF] Started GOES-I, 03/02/2022 14:19
+2022-02-03 14:19:52.195 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:19:51.3558211Z"!
+2022-02-03 14:19:52.323 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:19:51.3558211Z"!
+2022-02-03 14:19:52.325 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:19
+2022-02-03 14:21:41.515 +01:00 [INF] Started GOES-I, 03/02/2022 14:21
+2022-02-03 14:21:42.478 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:21:41.6740177Z"!
+2022-02-03 14:21:42.611 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:21:41.6740177Z"!
+2022-02-03 14:21:42.614 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:21
+2022-02-03 14:22:10.529 +01:00 [INF] Started GOES-I, 03/02/2022 14:22
+2022-02-03 14:22:11.643 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:22:10.6863129Z"!
+2022-02-03 14:22:11.769 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:22:10.6863129Z"!
+2022-02-03 14:22:11.772 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:22
+2022-02-03 14:29:02.082 +01:00 [INF] Started GOES-I, 03/02/2022 14:29
+2022-02-03 14:29:03.076 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:29:02.2402697Z"!
+2022-02-03 14:29:03.201 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:29:02.2402697Z"!
+2022-02-03 14:29:03.204 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:29
+2022-02-03 14:30:06.092 +01:00 [INF] Started GOES-I, 03/02/2022 14:30
+2022-02-03 14:30:07.134 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:30:06.2547473Z"!
+2022-02-03 14:30:07.260 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:30:06.2547473Z"!
+2022-02-03 14:30:07.262 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:30
