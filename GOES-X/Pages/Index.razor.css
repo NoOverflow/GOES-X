@@ -2,7 +2,10 @@
 
 }
 
+    
+
 #temp-visualizer > img {
+
     position: absolute;
     margin: auto;
     left: 0px;
@@ -14,6 +17,10 @@
     margin-top: 25px;
     margin-bottom: 25px;
 }
+
+    #temp-visualizer > img:focus {
+        outline: none;
+    }
 
 #menu-button {
     z-index: 2;

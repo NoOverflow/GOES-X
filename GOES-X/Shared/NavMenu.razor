@@ -88,8 +88,10 @@
         if (e.Value == null)
             return;
         int index = Convert.ToInt32(e.Value);
+        GOES_X.Model.EndUserProduct eup = GOES_X.Model.EndUserProduct.Products[index];
 
-        Preferences = await UserPrefsService.AddEndUserProduct(GOES_X.Model.EndUserProduct.Products[index]);
+        eup.Opacity = 1.0f;
+        Preferences = await UserPrefsService.AddEndUserProduct(eup);
         UserPrefsService.TriggerUpdateEvent();
         EupSelectValue = "+";
         InvokeAsync(() => StateHasChanged());
