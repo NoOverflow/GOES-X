@@ -26,8 +26,8 @@
     else
     {
         @foreach (var eup in Preferences.SelectedProducts)
-        {
-            <img style="opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
+        { 
+            <img tabindex="0" @onkeypress="OnImgVisualizerKeyPress" style="transform-origin: center; transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
         }
     }
 </div>
@@ -39,7 +39,18 @@
     public static DateTime EupTimestamp = DateTime.UtcNow.AddHours(-1);
     public string SatelliteName { get; set; } = "GOES 17";
 
+    public int RotationAngle { get; set; } = 0;
+
     public UserPreferences? Preferences { get; set; } = null;
+
+    private void OnImgVisualizerKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key != "r")
+            return;
+        RotationAngle += 45;
+        if (RotationAngle >= 360)
+            RotationAngle = 0;
+    }
 
     private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
     {
