@@ -4,6 +4,7 @@ using GOES_I.Logging;
 using GOES_X.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddSingleton<IQueryService, QueryService>((provider) =>
     new QueryService(
         new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1)));
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<UserPreferencesService>();
+
+builder.Services.AddScoped<UserPreferencesService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

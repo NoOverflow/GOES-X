@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using GOES_X.Model
 @using GOES_X.Services
 @using static GOES_X.Shared.NavMenu
 @inject UserPreferencesService UserPreferencesService
@@ -18,7 +19,17 @@
 <NavMenu Style="@MenuStyleCSS" />
 
 <div id="temp-visualizer">
-    <img src="@BandSelectedUrl"/>
+    @if (Preferences is null)
+    {
+        <h2>Loading preferences...</h2>
+    }
+    else
+    {
+        @foreach (var eup in Preferences.SelectedProducts)
+        {
+            <img style="opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
+        }
+    }
 </div>
 
 @code {
@@ -28,14 +39,24 @@
     public static DateTime EupTimestamp = DateTime.UtcNow.AddHours(-1);
     public string SatelliteName { get; set; } = "GOES 17";
 
-    public string BandSelectedUrl = $"https://localhost:7097/api/eup?eupName=Bands&key=Band1&timestamp={EupTimestamp.Ticks}";
+    public UserPreferences? Preferences { get; set; } = null;
+
+    private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
+    {
+        return $"/api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={EupTimestamp.Ticks}";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Preferences = await UserPreferencesService.GetPreferencesAsync();
+    }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        UserPreferencesService.OnUserPreferencesUpdate += () =>
+        UserPreferencesService.OnUserPreferencesUpdate += async () =>
         {
-            BandSelectedUrl = $"https://localhost:7097/api/eup?eupName=Bands&key=Band{UserPreferencesService.BandSelected}&timestamp={EupTimestamp.Ticks}";
+            Preferences = await UserPreferencesService.GetPreferencesAsync();
             InvokeAsync(() => StateHasChanged());
         };
     }

@@ -3,8 +3,16 @@
 }
 
 #temp-visualizer > img {
-    max-width: 100%;
-    height: auto;
+    position: absolute;
+    margin: auto;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: auto;
+    bottom: 0px;
+    max-height: calc(100% - 50px);
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 #menu-button {

@@ -4,65 +4,95 @@
 
 <div class="@Style navbar">
     <h2>GOES-X</h2>
-    <h4>Geographic coverage</h4>
-    <select class="sett-select big-select" @bind="@Settings.GeographicCoverage">
-        @foreach (var coverage in Enum.GetValues(typeof(GeographicCoverage)))
-        {
-            <option value="@coverage">@coverage</option>
-        }
-    </select>
-
-    <div id="data-timings">
-        <h3>Data Timings</h3>
-        <div class="separator"></div>
-        <Checkbox id="realtime-checkbox" LabelCheckbox="Realtime" Checked="@Settings.DataTimings.Realtime"></Checkbox>
-        <div id="timing-interval">
-            <input type="datetime-local" class="date-picker"
-                name="meeting-time" value="2018-06-12T19:30"/>
-            <div class="horizontal-separator"></div>
-            <input type="datetime-local" class="date-picker"
-                name="meeting-time" value="2018-06-12T19:30"/>
-        </div>
-    </div>
-
-    <div id="products">
-        <h3>Products</h3>
-        <div class="separator"></div>
-        <select @bind="UserPrefsService.BandSelected">
-            @for (var i = 1; i <= 16; i++)
+    @if (Preferences is null)
+    {
+        <h4>Loading preferences...</h4>
+    } 
+    else
+    {
+        <h4>Geographic coverage</h4>
+        <select class="sett-select big-select" @bind="@Preferences.GeographicCoverage">
+            @foreach (var coverage in Enum.GetValues(typeof(GeographicCoverage)))
             {
-                <option value="@i">Band @i</option>
+                <option value="@coverage">@coverage</option>
             }
         </select>
-        <ul>
-            <li><Product Value=@TestProduct></Product></li>
-        </ul>
-        <button class="sett-button">+</button>
-    </div>
 
-    <div id="animation">
-        <h3>Animation Manager</h3>
-        <div class="separator"></div>
-        <h4>Number of frames</h4>
-        <select class="sett-select small-select" id="numframes-select" @bind="@Settings.Animation.NumberOfFrames">
-        </select>
-        <h4>Intra-frame time</h4>
-        <select class="sett-select small-select" id="iframe-time-select" @bind="@Settings.Animation.IntraFrameTime">
-        </select>
-        <button class="sett-button">Save the animation</button>
-    </div>
+        <div id="data-timings">
+            <h3>Data Timings</h3>
+            <div class="separator"></div>
+            <Checkbox id="realtime-checkbox" LabelCheckbox="Realtime" Checked="@Preferences.DataTimings.Realtime"></Checkbox>
+            <div id="timing-interval">
+                <input type="datetime-local" class="date-picker"
+                    name="meeting-time" value="2018-06-12T19:30"/>
+                <div class="horizontal-separator"></div>
+                <input type="datetime-local" class="date-picker"
+                    name="meeting-time" value="2018-06-12T19:30"/>
+            </div>
+        </div>
+
+        <div id="products">
+            <h3>Products</h3>
+            <div class="separator"></div>
+        
+            <ul>
+                @foreach (var product in Preferences.SelectedProducts)
+                {
+                    <li><EndUserProduct Value="@product"></EndUserProduct></li>
+                }
+            </ul>
+
+            <select value="@EupSelectValue" class="sett-button" @onchange="OnProductSelectionChange">
+                <option value="+" selected disabled>+</option>
+                @for (var i = 0; i < GOES_X.Model.EndUserProduct.Products.Length; i++)
+                {
+                    <option value="@i">@GOES_X.Model.EndUserProduct.Products[i].Name</option>
+                }
+            </select>
+        </div>
+
+        <div id="animation">
+            <h3>Animation Manager</h3>
+            <div class="separator"></div>
+            <h4>Number of frames</h4>
+            <select class="sett-select small-select" id="numframes-select" @bind="@Preferences.Animation.NumberOfFrames">
+            </select>
+            <h4>Intra-frame time</h4>
+            <select class="sett-select small-select" id="iframe-time-select" @bind="@Preferences.Animation.IntraFrameTime">
+            </select>
+            <button class="sett-button">Save the animation</button>
+        </div>
+    }
 </div>
 
 @code {
     [ParameterAttribute]
     public string Style { get; set; }
 
-    public Model.Product TestProduct { get; set; } = new Model.Product {
-        Name = "Band",
-        Opacity = 0.5,
-        BestSpatialResolution = 1,
-        CentralWaveLength = 6.2F
-    };
-    public RuntimeSettings Settings {get; set;} = new RuntimeSettings();
+    public string EupSelectValue { get; set; } = "+";
+
+    public UserPreferences? Preferences { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserPrefsService.OnUserPreferencesUpdate += async () =>
+        {
+            Preferences = await UserPrefsService.GetPreferencesAsync();
+            InvokeAsync(() => StateHasChanged());
+        };
+        Preferences = await UserPrefsService.GetPreferencesAsync();
+    }
+
+    public async void OnProductSelectionChange(ChangeEventArgs e)
+    {
+        if (e.Value == null)
+            return;
+        int index = Convert.ToInt32(e.Value);
+
+        Preferences = await UserPrefsService.AddEndUserProduct(GOES_X.Model.EndUserProduct.Products[index]);
+        UserPrefsService.TriggerUpdateEvent();
+        EupSelectValue = "+";
+        InvokeAsync(() => StateHasChanged());
+    }
 
 }

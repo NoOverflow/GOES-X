@@ -183,7 +183,15 @@ namespace GOES_I
                     && !endUserProduct.IsProcessComplete(GetCachePath(CurrentQueryTime)))
                 {
                     Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
-                    await endUserProduct.Process(GetCachePath(CurrentQueryTime));
+                    try
+                    {
+                        await endUserProduct.Process(GetCachePath(CurrentQueryTime));
+                    }
+                    catch (Exception)
+                    {
+                        Log.Logger.Warning("EndUserProductService: Corrupted NetCDF file, recovering...");
+                        Directory.Delete(GetCachePath(CurrentQueryTime), true);
+                    }
                 }
 
                 if (!IsCacheComplete(CurrentQueryTime))

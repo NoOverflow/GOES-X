@@ -1,4 +1,5 @@
 using System;
+using static GOES_X.Services.UserPreferencesService;
 
 namespace GOES_X.Model
 {
@@ -18,16 +19,16 @@ namespace GOES_X.Model
     [Serializable]
     public class Animation
     {
-        public uint NumberOfFrames {get; set;}
-        public TimeSpan IntraFrameTime {get; set;}
+        public uint NumberOfFrames { get; set; }
+        public TimeSpan IntraFrameTime { get; set; }
     }
 
     [Serializable]
-    public class RuntimeSettings
+    public class UserPreferences
     {
         public GeographicCoverage GeographicCoverage { get; set; } = GeographicCoverage.CONUS;
-        public DataTimings DataTimings {get; set;} = new DataTimings();
-        public Animation Animation {get; set;} = new Animation();
-
+        public DataTimings DataTimings { get; set; } = new DataTimings();
+        public Animation Animation { get; set; } = new Animation();
+        public List<EndUserProduct> SelectedProducts { get; set; } = new List<EndUserProduct>();
     }
 }

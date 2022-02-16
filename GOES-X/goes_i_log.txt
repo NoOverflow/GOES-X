@@ -203,3 +203,213 @@
 2022-02-03 14:30:07.134 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T13:30:06.2547473Z"!
 2022-02-03 14:30:07.260 +01:00 [INF] QueryService: Got all data for timemark: "2022-02-03T12:30:06.2547473Z"!
 2022-02-03 14:30:07.262 +01:00 [INF] QueryService: Now querying products since 03/02/2022 - 13:30
+2022-02-15 23:16:50.927 +01:00 [INF] Started GOES-I, 15/02/2022 23:16
+2022-02-15 23:16:52.212 +01:00 [INF] QueryService: Missing data from 15/02/2022 22:16, downloading raw data
+2022-02-15 23:16:52.649 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/22/OR_ABI-L2-MCMIPF-M6_G16_s20220462200207_e20220462209520_c20220462210023.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/22\MCMIPF.nc
+2022-02-16 00:21:19.579 +01:00 [INF] Started GOES-I, 16/02/2022 00:21
+2022-02-16 00:21:20.771 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:21, downloading raw data
+2022-02-16 00:21:21.105 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:22:53.542 +01:00 [INF] Started GOES-I, 16/02/2022 00:22
+2022-02-16 00:22:54.785 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:29:00.130 +01:00 [INF] Started GOES-I, 16/02/2022 00:29
+2022-02-16 00:29:01.340 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:30:08.568 +01:00 [INF] Started GOES-I, 16/02/2022 00:30
+2022-02-16 00:30:09.779 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:30, downloading raw data
+2022-02-16 00:30:10.186 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:33:38.716 +01:00 [INF] Started GOES-I, 16/02/2022 00:33
+2022-02-16 00:33:39.918 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:33:55.978 +01:00 [INF] Started GOES-I, 16/02/2022 00:33
+2022-02-16 00:33:57.253 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:33, downloading raw data
+2022-02-16 00:33:57.586 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:35:05.599 +01:00 [INF] Started GOES-I, 16/02/2022 00:35
+2022-02-16 00:35:06.774 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:38:28.207 +01:00 [INF] Started GOES-I, 16/02/2022 00:38
+2022-02-16 00:38:29.427 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:38:29.632 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 00:38:29.637 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:38, downloading raw data
+2022-02-16 00:38:29.992 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:42:56.485 +01:00 [INF] Started GOES-I, 16/02/2022 00:42
+2022-02-16 00:42:57.758 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:42:58.168 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 00:42:58.194 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:42, downloading raw data
+2022-02-16 00:42:58.581 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:43:35.033 +01:00 [INF] Started GOES-I, 16/02/2022 00:43
+2022-02-16 00:43:36.257 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:43:36.454 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 00:43:36.462 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:43, downloading raw data
+2022-02-16 00:43:36.730 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:43:56.853 +01:00 [INF] Started GOES-I, 16/02/2022 00:43
+2022-02-16 00:43:58.136 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:43:58.364 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 00:43:58.377 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:43, downloading raw data
+2022-02-16 00:43:58.692 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 00:54:39.185 +01:00 [INF] Started GOES-I, 16/02/2022 00:54
+2022-02-16 00:54:40.455 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 00:54:40.885 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 00:54:40.889 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:54, downloading raw data
+2022-02-16 00:54:41.300 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 01:02:22.713 +01:00 [INF] Started GOES-I, 16/02/2022 01:02
+2022-02-16 01:02:23.944 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T00:02:22.8993313Z", skipping it.
+2022-02-16 01:02:24.116 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 01:02:24.350 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 01:02:24.368 +01:00 [INF] QueryService: Missing data from 15/02/2022 23:02, downloading raw data
+2022-02-16 01:02:24.837 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/046/23/OR_ABI-L2-MCMIPF-M6_G16_s20220462300207_e20220462309520_c20220462310019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/46/23\MCMIPF.nc
+2022-02-16 18:50:24.119 +01:00 [INF] Started GOES-I, 16/02/2022 18:50
+2022-02-16 18:50:25.416 +01:00 [INF] QueryService: Missing data from 16/02/2022 17:50, downloading raw data
+2022-02-16 18:50:25.885 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/17/OR_ABI-L2-MCMIPF-M6_G16_s20220471700209_e20220471709523_c20220471710024.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/17\MCMIPF.nc
+2022-02-16 18:56:45.350 +01:00 [INF] Started GOES-I, 16/02/2022 18:56
+2022-02-16 18:56:46.319 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 18:56:46.903 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 18:56:46.919 +01:00 [INF] QueryService: Missing data from 16/02/2022 17:56, downloading raw data
+2022-02-16 18:56:47.368 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/17/OR_ABI-L2-MCMIPF-M6_G16_s20220471700209_e20220471709523_c20220471710024.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/17\MCMIPF.nc
+2022-02-16 22:49:25.621 +01:00 [INF] Started GOES-I, 16/02/2022 22:49
+2022-02-16 22:49:26.895 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:49, downloading raw data
+2022-02-16 22:49:27.247 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 22:52:11.244 +01:00 [INF] Started GOES-I, 16/02/2022 22:52
+2022-02-16 22:52:12.492 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 22:52:12.937 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 22:52:12.940 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:52, downloading raw data
+2022-02-16 22:52:13.338 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 22:57:34.786 +01:00 [INF] Started GOES-I, 16/02/2022 22:57
+2022-02-16 22:57:35.931 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 22:57:36.161 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 22:57:36.171 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:57, downloading raw data
+2022-02-16 22:57:36.586 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 22:59:21.061 +01:00 [INF] Started GOES-I, 16/02/2022 22:59
+2022-02-16 22:59:22.256 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 22:59:22.515 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 22:59:22.521 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:59, downloading raw data
+2022-02-16 22:59:22.905 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 23:00:24.881 +01:00 [INF] Started GOES-I, 16/02/2022 23:00
+2022-02-16 23:00:26.084 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T22:00:25.0785089Z", skipping it.
+2022-02-16 23:00:26.270 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:00:26.531 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:00:26.541 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:00, downloading raw data
+2022-02-16 23:00:26.989 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 23:02:19.298 +01:00 [INF] Started GOES-I, 16/02/2022 23:02
+2022-02-16 23:02:20.568 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T22:02:19.4699764Z", skipping it.
+2022-02-16 23:02:20.746 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:02:20.967 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:02:20.980 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:02, downloading raw data
+2022-02-16 23:02:21.347 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 23:03:00.966 +01:00 [INF] Started GOES-I, 16/02/2022 23:03
+2022-02-16 23:03:02.168 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T22:03:01.1310140Z", skipping it.
+2022-02-16 23:03:02.308 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:03:02.493 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:03:02.501 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:03, downloading raw data
+2022-02-16 23:03:02.798 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 23:03:31.277 +01:00 [INF] Started GOES-I, 16/02/2022 23:03
+2022-02-16 23:03:32.416 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T22:03:31.4452788Z", skipping it.
+2022-02-16 23:03:32.625 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:03:32.882 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:03:32.887 +01:00 [INF] QueryService: Missing data from 16/02/2022 21:03, downloading raw data
+2022-02-16 23:03:33.226 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/21/OR_ABI-L2-MCMIPF-M6_G16_s20220472100207_e20220472109526_c20220472110015.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/21\MCMIPF.nc
+2022-02-16 23:12:03.721 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-16 23:12:03.753 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-16 23:12:04.331 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:11.051 +01:00 [DBG] Gscale image built in 6720ms
+2022-02-16 23:12:12.273 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:18.941 +01:00 [DBG] Gscale image built in 6667ms
+2022-02-16 23:12:20.150 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:26.811 +01:00 [DBG] Gscale image built in 6661ms
+2022-02-16 23:12:27.972 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:34.447 +01:00 [DBG] Gscale image built in 6474ms
+2022-02-16 23:12:35.634 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:42.150 +01:00 [DBG] Gscale image built in 6515ms
+2022-02-16 23:12:43.396 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:50.293 +01:00 [DBG] Gscale image built in 6897ms
+2022-02-16 23:12:51.532 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:12:58.414 +01:00 [DBG] Gscale image built in 6882ms
+2022-02-16 23:12:59.413 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:06.100 +01:00 [DBG] Gscale image built in 6686ms
+2022-02-16 23:13:07.101 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:13.658 +01:00 [DBG] Gscale image built in 6556ms
+2022-02-16 23:13:14.696 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:21.519 +01:00 [DBG] Gscale image built in 6822ms
+2022-02-16 23:13:22.591 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:29.384 +01:00 [DBG] Gscale image built in 6793ms
+2022-02-16 23:13:30.541 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:37.281 +01:00 [DBG] Gscale image built in 6739ms
+2022-02-16 23:13:38.436 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:45.291 +01:00 [DBG] Gscale image built in 6854ms
+2022-02-16 23:13:46.567 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:13:53.206 +01:00 [DBG] Gscale image built in 6639ms
+2022-02-16 23:13:54.366 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:14:01.350 +01:00 [DBG] Gscale image built in 6983ms
+2022-02-16 23:14:02.545 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-16 23:14:09.294 +01:00 [DBG] Gscale image built in 6749ms
+2022-02-16 23:14:09.848 +01:00 [INF] EndUserProductService: Processed end user products.
+2022-02-16 23:14:37.973 +01:00 [INF] QueryService: Now querying products since 16/02/2022 - 22:03
+2022-02-16 23:39:48.313 +01:00 [INF] Started GOES-I, 16/02/2022 23:39
+2022-02-16 23:39:49.392 +01:00 [INF] QueryService: Missing data from 16/02/2022 22:39, downloading raw data
+2022-02-16 23:39:49.794 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/22/OR_ABI-L2-MCMIPF-M6_G16_s20220472200207_e20220472209515_c20220472210019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/22\MCMIPF.nc
+2022-02-16 23:43:11.324 +01:00 [INF] Started GOES-I, 16/02/2022 23:43
+2022-02-16 23:43:12.509 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:43:12.806 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:43:12.820 +01:00 [INF] QueryService: Missing data from 16/02/2022 22:43, downloading raw data
+2022-02-16 23:43:14.873 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/22/OR_ABI-L2-MCMIPF-M6_G16_s20220472200207_e20220472209515_c20220472210019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/22\MCMIPF.nc
+2022-02-16 23:47:44.386 +01:00 [INF] Started GOES-I, 16/02/2022 23:47
+2022-02-16 23:47:45.506 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-16 23:47:45.707 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-16 23:47:45.720 +01:00 [INF] QueryService: Missing data from 16/02/2022 22:47, downloading raw data
+2022-02-16 23:47:46.078 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/22/OR_ABI-L2-MCMIPF-M6_G16_s20220472200207_e20220472209515_c20220472210019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/22\MCMIPF.nc
+2022-02-17 00:00:26.589 +01:00 [INF] Started GOES-I, 17/02/2022 00:00
+2022-02-17 00:00:28.472 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T23:00:26.8441442Z", skipping it.
+2022-02-17 00:00:28.748 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-17 00:00:29.033 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-17 00:00:29.039 +01:00 [INF] QueryService: Missing data from 16/02/2022 22:00, downloading raw data
+2022-02-17 00:00:29.519 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/22/OR_ABI-L2-MCMIPF-M6_G16_s20220472200207_e20220472209515_c20220472210019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/22\MCMIPF.nc
+2022-02-17 00:07:30.825 +01:00 [INF] Started GOES-I, 17/02/2022 00:07
+2022-02-17 00:07:32.201 +01:00 [INF] QueryService: No data for timemark: "2022-02-16T23:07:31.0811868Z", skipping it.
+2022-02-17 00:07:32.406 +01:00 [WRN] EndUserProductService: Has requirements but process incomplete. Resuming.
+2022-02-17 00:07:32.649 +01:00 [WRN] EndUserProductService: Corrupted NetCDF file, recovering...
+2022-02-17 00:07:32.659 +01:00 [INF] QueryService: Missing data from 16/02/2022 22:07, downloading raw data
+2022-02-17 00:07:33.004 +01:00 [DBG] S3 Query, Key=ABI-L2-MCMIPF/2022/047/22/OR_ABI-L2-MCMIPF-M6_G16_s20220472200207_e20220472209515_c20220472210019.nc StatusCode="OK" CachePath=C:\Users\Kadau\Documents\Work\EPITECH\Hub\GOES-X\GOES-X\bin\Debug\net6.0\storage\2022/47/22\MCMIPF.nc
+2022-02-17 00:16:32.518 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-17 00:16:32.550 +01:00 [DBG] Successfully loaded product,
+	- Name: 
+	- Dimensions array count: 5
+	- Variables array count: 161
+2022-02-17 00:16:33.067 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:16:39.527 +01:00 [DBG] Gscale image built in 6459ms
+2022-02-17 00:16:40.606 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:16:46.882 +01:00 [DBG] Gscale image built in 6276ms
+2022-02-17 00:16:48.046 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:16:54.327 +01:00 [DBG] Gscale image built in 6281ms
+2022-02-17 00:16:55.438 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:01.776 +01:00 [DBG] Gscale image built in 6337ms
+2022-02-17 00:17:03.006 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:09.571 +01:00 [DBG] Gscale image built in 6564ms
+2022-02-17 00:17:10.746 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:17.307 +01:00 [DBG] Gscale image built in 6561ms
+2022-02-17 00:17:18.453 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:24.813 +01:00 [DBG] Gscale image built in 6359ms
+2022-02-17 00:17:25.858 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:32.326 +01:00 [DBG] Gscale image built in 6466ms
+2022-02-17 00:17:33.310 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:39.698 +01:00 [DBG] Gscale image built in 6387ms
+2022-02-17 00:17:40.662 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:47.059 +01:00 [DBG] Gscale image built in 6396ms
+2022-02-17 00:17:48.100 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:17:54.520 +01:00 [DBG] Gscale image built in 6420ms
+2022-02-17 00:17:55.642 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:18:02.074 +01:00 [DBG] Gscale image built in 6431ms
+2022-02-17 00:18:03.135 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:18:09.990 +01:00 [DBG] Gscale image built in 6854ms
+2022-02-17 00:18:11.151 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:18:17.741 +01:00 [DBG] Gscale image built in 6590ms
+2022-02-17 00:18:18.890 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:18:25.587 +01:00 [DBG] Gscale image built in 6697ms
+2022-02-17 00:18:26.686 +01:00 [DBG] Creating RGB image, gamma=1.6 transparency_key=-1
+2022-02-17 00:18:33.111 +01:00 [DBG] Gscale image built in 6425ms
+2022-02-17 00:18:33.711 +01:00 [INF] EndUserProductService: Processed end user products.
+2022-02-17 00:18:33.712 +01:00 [INF] QueryService: Now querying products since 16/02/2022 - 23:07
