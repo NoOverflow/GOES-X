@@ -136,9 +136,10 @@ namespace GOES_I
             
             Product product = await ProductQueryier.GetProduct(GoesProduct.MCMIPF, objects[0].Key, Path.Combine(cachePath, "MCMIPF.nc"));
 
-            // TODO: Loop over multiple end products
-            // TODO: Get this from a factory or smth
-            await new BandsEndUserProduct().Process(cachePath);
+            foreach (var eup in EndUserProducts.EndUserProducts.EndUserProductsArray)
+            {
+                eup.Process(cachePath);
+            }
             Log.Logger.Information("EndUserProductService: Processed end user products.");
         }
 
@@ -177,22 +178,24 @@ namespace GOES_I
 
                 // TODO: Move to a thread
                 // TODO: Loop over multiple end products
-                BandsEndUserProduct endUserProduct = new BandsEndUserProduct();
-
-                if (endUserProduct.HasRequirements(GetCachePath(CurrentQueryTime)) 
-                    && !endUserProduct.IsProcessComplete(GetCachePath(CurrentQueryTime)))
+                foreach (var eup in EndUserProducts.EndUserProducts.EndUserProductsArray)
                 {
-                    Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
-                    try
+                    if (eup.HasRequirements(GetCachePath(CurrentQueryTime))
+                   && !eup.IsProcessComplete(GetCachePath(CurrentQueryTime)))
                     {
-                        await endUserProduct.Process(GetCachePath(CurrentQueryTime));
-                    }
-                    catch (Exception)
-                    {
-                        Log.Logger.Warning("EndUserProductService: Corrupted NetCDF file, recovering...");
-                        Directory.Delete(GetCachePath(CurrentQueryTime), true);
+                        Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
+                        try
+                        {
+                            await eup.Process(GetCachePath(CurrentQueryTime));
+                        }
+                        catch (Exception)
+                        {
+                            Log.Logger.Warning("EndUserProductService: Corrupted NetCDF file, recovering...");
+                            Directory.Delete(GetCachePath(CurrentQueryTime), true);
+                        }
                     }
                 }
+
 
                 if (!IsCacheComplete(CurrentQueryTime))
                 {

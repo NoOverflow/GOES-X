@@ -43,7 +43,7 @@ namespace GOES_X.Services
         }
 
 
-        private async Task SavePreferencesAsync(UserPreferences preferences)
+        public async Task SavePreferencesAsync(UserPreferences preferences)
         {
             await _sessionStorage.SetAsync("preferences", preferences);
         }

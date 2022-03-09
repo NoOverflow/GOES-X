@@ -7,7 +7,7 @@ namespace GOES_X.Model
     [Serializable]
     public class EndUserProduct
     {
-        // TODO: Migrate this somewhere
+        // TODO: Get this from an API
         public static EndUserProduct[] Products { get; set; } = new EndUserProduct[]
         {
             new EndUserProduct()
@@ -139,6 +139,14 @@ namespace GOES_X.Model
                 CentralWaveLength = 0.0F,
                 EupName = "Bands",
                 EupIndexName = "Band16"
+            },
+            new EndUserProduct()
+            {
+                Name = "Fake Colors RGB (MCMIPF)",
+                BestSpatialResolution = 2.0F,
+                CentralWaveLength = 0.0F,
+                EupName = "Color",
+                EupIndexName = "Color"
             }
         };
 

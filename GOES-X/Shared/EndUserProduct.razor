@@ -7,7 +7,7 @@
     @onmousemove=OnProgressBarMouseMove @ref=TopBar
       id="outer-pgbar">
     <p id="inner-text" onselectstart="return false;" ondragstart="return false;">@Value.Name</p>
-    <button id="info">i</button>
+    <button disabled id="info">i</button>
     <div style="width: @Progress%;" id="inner-pgbar">
 
     </div>
@@ -42,6 +42,7 @@
 
     public void OnProgressBarMouseUp()
     {
+        UserPrefsService.SetEndUserProductOpacity(Value, Value.Opacity);
         Dragging = false;
     }
 
@@ -52,7 +53,6 @@
         var x = (int) (e.ClientX - result.Left);
 
         Value.Opacity = (e.ClientX - result.Left) / result.Width;
-        UserPrefsService.SetEndUserProductOpacity(Value, Value.Opacity);
     }
 
     public async void OnProgressBarMouseMove(MouseEventArgs e)
@@ -63,6 +63,5 @@
         var x = (int) (e.ClientX - result.Left);
 
         Value.Opacity = (e.ClientX - result.Left) / result.Width;
-        UserPrefsService.SetEndUserProductOpacity(Value, Value.Opacity);
     }
 }

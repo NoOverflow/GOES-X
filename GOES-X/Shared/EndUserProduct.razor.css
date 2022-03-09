@@ -34,6 +34,7 @@
 }
 
 #info {
+    z-index: -1;
     position: absolute;
     width: 18px;
     height: 18px;

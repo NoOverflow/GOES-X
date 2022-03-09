@@ -3,6 +3,7 @@
 @using GOES_X.Services
 @using static GOES_X.Shared.NavMenu
 @inject UserPreferencesService UserPreferencesService
+@inject IJSRuntime JsRuntime
 
 <div class="topbar">
     <h1>@SatelliteName</h1>
@@ -52,14 +53,27 @@
             RotationAngle = 0;
     }
 
+    private string GetTimestamp()
+    {
+        if (Preferences.DataTimings.Realtime)
+        {
+            return DateTime.UtcNow.AddHours(-1).Ticks.ToString();
+        } 
+        else
+        {
+            return Preferences.DataTimings.StartTime.Ticks.ToString();    
+        }
+    }
+
     private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
     {
-        return $"/api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={EupTimestamp.Ticks}";
+        return $"/api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp()}";
     }
 
     protected override async Task OnInitializedAsync()
     {
         Preferences = await UserPreferencesService.GetPreferencesAsync();
+        JsRuntime.InvokeAsync<object>("CreateViewer", null);
     }
 
     protected override void OnInitialized()

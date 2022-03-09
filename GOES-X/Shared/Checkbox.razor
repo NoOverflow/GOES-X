@@ -1,5 +1,5 @@
 <label id="@id" class="container">@LabelCheckbox
-  <input type="checkbox" checked="@Checked">
+  <input type="checkbox" checked="@Checked" @onchange="OnCheckboxChange">
   <span class="checkmark"></span>
 </label>
 
@@ -11,5 +11,14 @@
     public bool Checked {get; set;}
 
     [Parameter]
-    public string id {get; set;}
+    public string id { get; set; }
+
+
+    [Parameter]
+    public Action OnChange { get; set;  }
+
+    protected void OnCheckboxChange()
+    {
+        OnChange.Invoke();
+    }
 }

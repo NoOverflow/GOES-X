@@ -13,10 +13,18 @@
     <link href="GOES-X.styles.css" rel="stylesheet" />
     <title>GOES-X</title>
     <base href="/" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="GOES-X.styles.css" rel="stylesheet" />
-    <script> MyDOMGetBoundingClientRect = (element, parm) => { return element.getBoundingClientRect(); }; </script>
+    <script> MyDOMGetBoundingClientRect = (element, parm) => { return element.getBoundingClientRect(); };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.min.js" integrity="sha512-2HLzgJH7ZNywnEDB1HqijieFxszStt3QXS8Qk9m/VMUV/asMWlz9PmibHsvWIz9rtKOOr28z8zu1iJ3pf/TTHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.css" integrity="sha512-caKp8jXImkCfnEGA8RCJPQeW/+wtI9reknlKZMlKnIE8RHgxMBCppLsPvM429eoo0+PSZc9J/dQjVH3OH/K3Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="module" src="~/helper.js"></script>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>

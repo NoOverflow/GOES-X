@@ -1,6 +1,7 @@
 ﻿@using GOES_X.Model;
 @using GOES_X.Services
 @inject UserPreferencesService UserPrefsService
+@inject IJSRuntime JsRuntime
 
 <div class="@Style navbar">
     <h2>GOES-X</h2>
@@ -21,13 +22,18 @@
         <div id="data-timings">
             <h3>Data Timings</h3>
             <div class="separator"></div>
-            <Checkbox id="realtime-checkbox" LabelCheckbox="Realtime" Checked="@Preferences.DataTimings.Realtime"></Checkbox>
+            <Checkbox id="realtime-checkbox" LabelCheckbox="Realtime" OnChange="@(() => OnRealtimeCheckboxChange())" Checked="@Preferences.DataTimings.Realtime"></Checkbox>
             <div id="timing-interval">
-                <input type="datetime-local" class="date-picker"
-                    name="meeting-time" value="2018-06-12T19:30"/>
-                <div class="horizontal-separator"></div>
-                <input type="datetime-local" class="date-picker"
-                    name="meeting-time" value="2018-06-12T19:30"/>
+                @if (Preferences.DataTimings.Realtime)
+                {
+                    <input type="datetime-local" disabled class="date-picker" 
+                        name="start-time" value="2018-06-12T19:30"/>
+                } 
+                else
+                {
+                    <input type="datetime-local" class="date-picker" id="datepicker" @onchange="OnDateSelectionChange" 
+                        name="start-time" value="2018-06-12T19:30"/>
+                }
             </div>
         </div>
 
@@ -49,6 +55,8 @@
                     <option value="@i">@GOES_X.Model.EndUserProduct.Products[i].Name</option>
                 }
             </select>
+
+            
         </div>
 
         <div id="animation">
@@ -81,6 +89,28 @@
             InvokeAsync(() => StateHasChanged());
         };
         Preferences = await UserPrefsService.GetPreferencesAsync();
+        
+    }
+
+    private void OnRealtimeCheckboxChange()
+    {
+        Preferences.DataTimings.Realtime = !Preferences.DataTimings.Realtime;
+        UserPrefsService.SavePreferencesAsync(Preferences);
+        UserPrefsService.TriggerUpdateEvent();
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    private void OnDateSelectionChange(ChangeEventArgs e)
+    {
+        Preferences.DataTimings.StartTime = DateTime.Parse((string)e.Value);
+        UserPrefsService.SavePreferencesAsync(Preferences);
+        UserPrefsService.TriggerUpdateEvent();
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    private void ConstraintDateChange()
+    {
+        
     }
 
     public async void OnProductSelectionChange(ChangeEventArgs e)

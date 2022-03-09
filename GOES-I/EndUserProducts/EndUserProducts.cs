@@ -9,7 +9,8 @@ namespace GOES_I.EndUserProducts
     {
         public static IEndUserProduct[] EndUserProductsArray = new IEndUserProduct[]
         {
-            new BandsEndUserProduct()
+            new BandsEndUserProduct(),
+            new ColorEndUserProduct()
         };
 
         public static IEndUserProduct FromName(string name)
