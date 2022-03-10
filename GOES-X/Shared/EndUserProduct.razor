@@ -53,6 +53,7 @@
         var x = (int) (e.ClientX - result.Left);
 
         Value.Opacity = (e.ClientX - result.Left) / result.Width;
+        UserPrefsService.SetEndUserProductOpacity(Value, Value.Opacity);
     }
 
     public async void OnProgressBarMouseMove(MouseEventArgs e)
@@ -63,5 +64,6 @@
         var x = (int) (e.ClientX - result.Left);
 
         Value.Opacity = (e.ClientX - result.Left) / result.Width;
+        UserPrefsService.SetEndUserProductOpacity(Value, Value.Opacity);
     }
 }

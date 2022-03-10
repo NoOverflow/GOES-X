@@ -27,12 +27,12 @@
                 @if (Preferences.DataTimings.Realtime)
                 {
                     <input type="datetime-local" disabled class="date-picker" 
-                        name="start-time" value="2018-06-12T19:30"/>
+                        name="start-time" value="@Preferences.DataTimings.StartTime.ToString("yyyy-MM-ddTHH:mm")"/>
                 } 
                 else
                 {
                     <input type="datetime-local" class="date-picker" id="datepicker" @onchange="OnDateSelectionChange" 
-                        name="start-time" value="2018-06-12T19:30"/>
+                        name="start-time" value="@Preferences.DataTimings.StartTime.ToString("yyyy-MM-ddTHH:mm")"/>
                 }
             </div>
         </div>

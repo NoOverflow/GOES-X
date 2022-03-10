@@ -15,8 +15,9 @@ builder.Services.AddSingleton<IQueryService, QueryService>((provider) =>
     new QueryService(
         new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1)));
 builder.Services.AddSingleton<IUserService, UserService>();
-
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<UserPreferencesService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

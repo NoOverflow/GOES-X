@@ -51,7 +51,7 @@ namespace GOES_X.Services
         public async Task<UserPreferences> GetPreferencesAsync()
         {
             var result = await _sessionStorage.GetAsync<UserPreferences>("preferences");
-
+            var pref = new UserPreferences();
             return result.Success ? result.Value! : new UserPreferences(); 
         }
     }
