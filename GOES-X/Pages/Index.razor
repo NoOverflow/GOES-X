@@ -2,8 +2,12 @@
 @using GOES_X.Model
 @using GOES_X.Services
 @using static GOES_X.Shared.NavMenu
+@using HttpRequest = Leaf.xNet.HttpRequest;
+@using HttpResponse = Leaf.xNet.HttpResponse;
 @inject UserPreferencesService UserPreferencesService
 @inject IJSRuntime JsRuntime
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
 
 <div class="topbar">
     <h1>@SatelliteName</h1>
@@ -28,7 +32,14 @@
     {
         @foreach (var eup in Preferences.SelectedProducts)
         { 
-            <img tabindex="0" @onkeypress="OnImgVisualizerKeyPress" style="transform-origin: center; transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
+            @if (IsVisualizerImgAvailable(eup))
+            {
+                <img tabindex="0" @onkeypress="OnImgVisualizerKeyPress" style="transform-origin: center; transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
+            } 
+            else
+            {
+                <p>@(eup.Name) is unavailable for this timestamp.</p>
+            }
         }
     }
 </div>
@@ -53,6 +64,15 @@
             RotationAngle = 0;
     }
 
+    public bool IsVisualizerImgAvailable(GOES_X.Model.EndUserProduct eup)
+    {
+        HttpClient client = ClientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Options, BuildEupUrl(eup));
+        var response = client.Send(request);
+
+        return response.IsSuccessStatusCode;
+    }
+
     private string GetTimestamp()
     {
         if (Preferences.DataTimings.Realtime)
@@ -67,7 +87,7 @@
 
     private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
     {
-        return $"/api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp()}";
+        return NavigationManager.BaseUri + $"api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp()}";
     }
 
     protected override async Task OnInitializedAsync()
