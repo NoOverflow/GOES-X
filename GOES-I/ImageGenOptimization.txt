@@ -1,0 +1,3 @@
+﻿Using Bitmap method (GDI+ - Windows Only): Grayscale Image takes 8615ms average (Done over 9 passes)
+Using Bitmap method (GDI+ - Windows Only): RGB Image takes 22215ms average (Done over 9 passes)
+

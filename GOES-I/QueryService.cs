@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -44,6 +45,7 @@ namespace GOES_I
         public static string StoragePath;
 
         private AmazonS3Client AwsClient;
+
         private S3ProductQueryier ProductQueryier { get; set; }
 
         /// <summary>
@@ -60,8 +62,11 @@ namespace GOES_I
         {
             this.AwsClient = awsClient;
             this.ProductQueryier = new S3ProductQueryier(this.AwsClient);
+            
             if (absoluteStoragePath == null)
                 StoragePath = absoluteStoragePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "storage");
+            else
+                StoragePath = absoluteStoragePath;
             if (!Directory.Exists(absoluteStoragePath))
                 Directory.CreateDirectory(absoluteStoragePath);
         }
@@ -71,28 +76,29 @@ namespace GOES_I
         /// </summary>
         /// <param name="timemark">The timestamp</param>
         /// <returns>True if we have all data</returns>
-        private bool IsCacheComplete(DateTime timemark)
+        private async Task<bool> IsCacheCompleteAsync(DateTime timemark)
         {
-            string timePath = GetCachePath(timemark);
-
-            if (!Directory.Exists(timePath))
-                return false;
-
-
-
-            // TODO: We can't do that, some products are only available at different intervals
-            // 
-            /*foreach (GoesChannel product in Enum.GetValues(typeof(GoesChannel)))
+            try
             {
-                if (!File.Exists(StoragePath + "/" + timePath + "/" + product.ToString() + ".png"))
-                {
-                    Log.Logger.Warning("QueryService: Directory exists but incomplete data from {0} {1}, downloading missing raw data",
-                        CurrentQueryTime.ToShortDateString(),
-                        CurrentQueryTime.ToShortTimeString());
+                string hDirectory = GetCachePath(timemark);
+                IEnumerable<string> mDirectories = null;
+                string path = String.Empty;
+                List<S3Object> objects = null;
+
+                if (!Directory.Exists(hDirectory))
                     return false;
-                }
-            }*/
-            return true;
+                mDirectories = Directory.EnumerateDirectories(hDirectory);
+                path = ProductQueryier.GetS3Prefix("ABI-L2-MCMIPF", timemark); // TODO: Do it for every requirements
+                objects = await ProductQueryier.ListRawProducts(path);
+                foreach (var obj in objects)
+                    if (mDirectories.Count(x => Convert.ToInt32(x) == obj.LastModified.Minute) == 0)
+                        return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }         
         }
 
         private async Task<bool> TimemarkExists(string product, DateTime timemark)
@@ -104,7 +110,7 @@ namespace GOES_I
 
                 return objects.Count > 0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -121,11 +127,7 @@ namespace GOES_I
 
         private async Task TimemarkCacheDownload(DateTime timemark)
         {
-            string cachePath = GetCachePath(timemark);
-
-            // TODO: Loop over all products
-            
-            // TODO: Get multiple files
+            // TODO: Add other NOAA products from EUPs requirements
             var objects = await ProductQueryier.ListRawProducts(ProductQueryier.GetS3Prefix("ABI-L2-MCMIPF", timemark));
             
             if (objects.Count == 0)
@@ -133,19 +135,25 @@ namespace GOES_I
                 Log.Logger.Warning("QueryService: Tried to cache an empty product at timemark: {0}", timemark);
                 return;
             }
-            
-            Product product = await ProductQueryier.GetProduct(GoesProduct.MCMIPF, objects[0].Key, Path.Combine(cachePath, "MCMIPF.nc"));
 
-            foreach (var eup in EndUserProducts.EndUserProducts.EndUserProductsArray)
+            foreach (S3Object obj in objects)
             {
-                eup.Process(cachePath);
-            }
-            Log.Logger.Information("EndUserProductService: Processed end user products.");
+                string cachePath = Path.Combine(GetCachePath(timemark), obj.LastModified.Minute.ToString());
+
+                if (Directory.Exists(cachePath))
+                {
+                    Log.Logger.Debug("QueryService: Already got product at {0} - {1}", obj.LastModified.ToShortDateString(), obj.LastModified.ToShortTimeString());
+                    continue;
+                }
+                await ProductQueryier.GetProduct(GoesProduct.MCMIPF, obj.Key, Path.Combine(cachePath, "MCMIPF.nc"));
+                foreach (var eup in EndUserProducts.EndUserProducts.EndUserProductsArray)
+                    await eup.Process(cachePath);
+                Log.Logger.Information("EndUserProductService: Processed end user products for {0} - {1}", obj.LastModified.ToShortDateString(), obj.LastModified.ToShortTimeString());
+            }      
         }
 
         public void Start()
         {
-            // TODO: Move to a thread
             QueryLogicThread = new Thread(async () =>
             {
                 await QueryLogic(QueryLogicCancellationTokenSource.Token);
@@ -167,6 +175,7 @@ namespace GOES_I
             // Backtrack from current -> current - QueryTimeSpan
             while (CurrentQueryTime >= StartQueryTime - QueryTimeSpan)
             {
+                // TODO: Check for all EUPs
                 bool tmExists = await TimemarkExists("ABI-L2-MCMIPF", CurrentQueryTime);
 
                 if (!tmExists)
@@ -176,33 +185,39 @@ namespace GOES_I
                     continue;
                 }
 
-                // TODO: Move to a thread
-                // TODO: Loop over multiple end products
+                // Check for incomplete NetCDF parsing process
                 foreach (var eup in EndUserProducts.EndUserProducts.EndUserProductsArray)
                 {
-                    if (eup.HasRequirements(GetCachePath(CurrentQueryTime))
-                   && !eup.IsProcessComplete(GetCachePath(CurrentQueryTime)))
+                    string hourCachePath = GetCachePath(CurrentQueryTime);
+
+                    if (!Directory.Exists(hourCachePath))
+                        continue;
+                    IEnumerable<string> minDirectories = Directory.EnumerateDirectories(hourCachePath);
+
+                    foreach (string dir in minDirectories)
                     {
-                        Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
-                        try
+                        if (eup.HasRequirements(dir)
+                        && !eup.IsProcessComplete(dir))
                         {
-                            await eup.Process(GetCachePath(CurrentQueryTime));
-                        }
-                        catch (Exception)
-                        {
-                            Log.Logger.Warning("EndUserProductService: Corrupted NetCDF file, recovering...");
-                            Directory.Delete(GetCachePath(CurrentQueryTime), true);
+                            Log.Logger.Warning("EndUserProductService: Has requirements but process incomplete. Resuming.");
+                            try
+                            {
+                                await eup.Process(dir);
+                            }
+                            catch (Exception)
+                            {
+                                Log.Logger.Warning("EndUserProductService: Corrupted NetCDF file, recovering...");
+                                Directory.Delete(dir, true);
+                            }
                         }
                     }
                 }
 
-
-                if (!IsCacheComplete(CurrentQueryTime))
+                if (!(await IsCacheCompleteAsync(CurrentQueryTime)))
                 {
-                    Log.Logger.Information("QueryService: Missing data from {0} {1}, downloading raw data", 
+                    Log.Logger.Information("QueryService: Missing data from {0} - {1}, downloading raw data", 
                         CurrentQueryTime.ToShortDateString(), 
                         CurrentQueryTime.ToShortTimeString());
-                    // Download it 
                     await TimemarkCacheDownload(CurrentQueryTime);
                 } 
                 else
@@ -214,33 +229,31 @@ namespace GOES_I
 
             Log.Logger.Information("QueryService: Now querying products since {0}",
                 StartQueryTime.ToShortDateString() + " - " + StartQueryTime.ToShortTimeString());
+
             CurrentQueryTime = StartQueryTime + IncrementalTimeSpan;
             while (!cancellationToken.IsCancellationRequested)
             {
                 while (CurrentQueryTime < DateTime.UtcNow + IncrementalTimeSpan)
                 {
+                    // TODO: Check for all EUPs
                     bool tmExists = await TimemarkExists("ABI-L2-MCMIPF", CurrentQueryTime);
 
-                    if (!IsCacheComplete(CurrentQueryTime) && tmExists)
+                    if (!(await IsCacheCompleteAsync(CurrentQueryTime)) && tmExists)
                     {
-                        Log.Logger.Information("QueryService: Missing data from {0} {1}, downloading raw data",
+                        Log.Logger.Information("QueryService: Missing data from {0} - {1}, downloading raw data",
                             CurrentQueryTime.ToShortDateString(),
                             CurrentQueryTime.ToShortTimeString()
                         );
-                        // Download it
                         await TimemarkCacheDownload(CurrentQueryTime);
                         CurrentQueryTime += IncrementalTimeSpan;
                     } 
                     else
                     {
-                        // Move to a config
                         Thread.Sleep(1000);
                     }
                 }
-                // Move to a config
                 Thread.Sleep(1000);
             }
-            // Once done, wait for new data to come, and get them
         }
     }
 }

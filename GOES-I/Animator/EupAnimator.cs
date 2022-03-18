@@ -28,25 +28,42 @@ namespace GOES_I.Animator
 
         public static string AnimateEup(string productName, string productIndex, DateTime initTimestamp, TimeSpan length)
         {
-            var settings = new VideoEncoderSettings(width: 5424, height: 5424, framerate: 1, codec: VideoCodec.H264);
+            // TODO: Get dimensions from the first frame
+            var settings = new VideoEncoderSettings(width: 5424, height: 5424, framerate: 30, codec: VideoCodec.H264);
             string tempPath = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".mp4";
-            DateTime endTimestamp = initTimestamp - length;
+            DateTime endTimestamp = initTimestamp;
             IEndUserProduct eup = EndUserProducts.EndUserProducts.FromName(productName);
 
+            initTimestamp = initTimestamp - length;
             settings.EncoderPreset = EncoderPreset.Medium;
             settings.CRF = 17;
             using (var file = MediaBuilder.CreateContainer(tempPath).WithVideo(settings).Create())
             {
                 // TODO: Change increment
-                for (; initTimestamp > endTimestamp; initTimestamp = initTimestamp.AddHours(-1))
+                for (; initTimestamp <= endTimestamp; initTimestamp = initTimestamp.AddHours(1))
                 {
-                    string imgPath = (string)eup.Get(QueryService.GetCachePath(initTimestamp))[productIndex];
+                    string hDirectory = QueryService.GetCachePath(initTimestamp);
 
-                    if (!File.Exists(imgPath)) continue;
-                    ImageData frame = LoadImageData(imgPath);
+                    if (!Directory.Exists(hDirectory))
+                    {
+                        Log.Logger.Warning("EupAnimator: Requested animation for {0} is missing information for hour {1}. Skipping...", eup.Name, initTimestamp.Hour);
+                        continue;
+                    }
 
-                    file.Video.AddFrame(frame);
-                    Log.Logger.Debug("Added frame.");
+                    IEnumerable<string> minDirectories = Directory.GetDirectories(hDirectory);
+
+                    foreach (var dir in minDirectories)
+                    {
+                        string imgPath = (string)eup.Get(dir)[productIndex];
+
+                        if (!File.Exists(imgPath)) 
+                            continue;
+                        ImageData frame = LoadImageData(imgPath);
+
+                        for (int i = 0; i < 30; i++)
+                            file.Video.AddFrame(frame);
+                        Log.Logger.Debug("Added frame.");
+                    }   
                 }
             }
             return tempPath;
