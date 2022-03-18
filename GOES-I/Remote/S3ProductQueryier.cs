@@ -42,11 +42,20 @@ namespace GOES_I
             var result = await Client.GetObjectAsync(GOES_16_BUCKET, key);
 
             Log.Logger.Debug("S3 Query, Key={0} StatusCode={1} CachePath={2}", key, result.HttpStatusCode, path);
+            result.WriteObjectProgressEvent += Result_WriteObjectProgressEvent;
             if (!File.Exists(path))
                 await result.WriteResponseStreamToFileAsync(path, false, new System.Threading.CancellationToken());
             else
                 Log.Logger.Warning("Tried to download a file that already existed: {0}", path);
             return new Product(type, path);
+        }
+
+        private static int previousProgressV = -1;
+        private void Result_WriteObjectProgressEvent(object sender, WriteObjectProgressArgs e)
+        {
+            if (e.PercentDone % 10 == 0 && (e.PercentDone % 10 != previousProgressV))
+                Log.Logger.Information("S3 Object {0} download, progress: {1}%", e.Key, e.PercentDone);
+            previousProgressV = e.PercentDone % 10;
         }
 
         public async Task<List<S3Object>> ListRawProducts(string prefix = "")
