@@ -73,7 +73,7 @@ namespace GOES_I.Utils
                 }
             }
 
-            SixLabors.ImageSharp.Image img = SixLabors.ImageSharp.Image.LoadPixelData<Rgba32>(pixelBytes, width, height);
+            SixLabors.ImageSharp.Image img = SixLabors.ImageSharp.Image.LoadPixelData<Bgra32>(pixelBytes, width, height);
 
             img.Mutate(c => c.Rotate(90));
             sw.Stop();

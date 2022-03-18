@@ -62,7 +62,7 @@ namespace GOES_I.EndUserProducts
                 {
                     r[y, x] = (double)(rawR[y, x] * rScaleFactor + rAddFactor);
                     b[y, x] = (double)(rawB[y, x] * bScaleFactor + bAddFactor);
-                    g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor + bAddFactor));
+                    g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor + gAddFactor));
                 }
             }
             GOES_I.Utils.ImageUtils.CreateRGBImage(r, g, b, gamma: 1.8, -1).SaveAsPng(Path.Combine(path, "Color.png"));
