@@ -47,4 +47,7 @@ app.UseEndpoints((endpoints) =>
     endpoints.MapControllers();
 });
 
+// TODO: Fix absolute path
+FFMediaToolkit.FFmpegLoader.FFmpegPath = Path.Combine(@"C:\Users\Kadau\source\repos\GOES-X\GOES-X\GOES-X\bin\Debug\net6.0" + "/FFMpeg");
+
 app.Run();
