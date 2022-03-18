@@ -2,16 +2,15 @@
 @using GOES_X.Model
 @using GOES_X.Services
 @using static GOES_X.Shared.NavMenu
-@using HttpRequest = Leaf.xNet.HttpRequest;
-@using HttpResponse = Leaf.xNet.HttpResponse;
 @inject UserPreferencesService UserPreferencesService
+@inject AnimationService AnimationService
 @inject IJSRuntime JsRuntime
 @inject IHttpClientFactory ClientFactory
 @inject NavigationManager NavigationManager
 
 <div class="topbar">
     <h1>@SatelliteName</h1>
-    
+   
     <button @onclick="ToggleMenu" id="menu-button">
         <svg width="30" height="23" viewBox="0 0 30 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="30" height="3" fill="#FFF"/>
@@ -20,7 +19,7 @@
         </svg>
     </button>
 </div>
-
+<h4>@(GetTimestamp().ToString("dd/MM/yy - HH:mm"))</h4>
 <NavMenu Style="@MenuStyleCSS" />
 
 <div id="temp-visualizer">
@@ -38,21 +37,18 @@
             } 
             else
             {
-                <p>@(eup.Name) is unavailable for this timestamp.</p>
+                <p>@(eup.Name) is unavailable for this timestamp (@(GetTimestamp().ToShortDateString() + " - " + GetTimestamp().ToShortTimeString()))</p>
             }
         }
     }
 </div>
 
 @code {
-    // Dynamic CSS
     public bool MenuVisible = false;
     public string MenuStyleCSS => (MenuVisible ? "show" : "collapse");
     public static DateTime EupTimestamp = DateTime.UtcNow.AddHours(-1);
     public string SatelliteName { get; set; } = "GOES 17";
-
     public int RotationAngle { get; set; } = 0;
-
     public UserPreferences? Preferences { get; set; } = null;
 
     private void OnImgVisualizerKeyPress(KeyboardEventArgs e)
@@ -73,21 +69,19 @@
         return response.IsSuccessStatusCode;
     }
 
-    private string GetTimestamp()
+    private DateTime GetTimestamp()
     {
-        if (Preferences.DataTimings.Realtime)
-        {
-            return DateTime.UtcNow.AddHours(-1).Ticks.ToString();
-        } 
+        if (AnimationService.AnimationRunning)
+            return AnimationService.CurrentDate;
+        else if (Preferences != null)
+            return Preferences.DataTimings.Realtime ? DateTime.UtcNow : Preferences.DataTimings.StartTime;    
         else
-        {
-            return Preferences.DataTimings.StartTime.Ticks.ToString();    
-        }
+            return DateTime.UtcNow;
     }
 
     private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
     {
-        return NavigationManager.BaseUri + $"api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp()}";
+        return NavigationManager.BaseUri + $"api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp().Ticks.ToString()}";
     }
 
     protected override async Task OnInitializedAsync()
@@ -102,6 +96,10 @@
         UserPreferencesService.OnUserPreferencesUpdate += async () =>
         {
             Preferences = await UserPreferencesService.GetPreferencesAsync();
+            InvokeAsync(() => StateHasChanged());
+        };
+        AnimationService.OnAnimationTick += (DateTime currentDate) =>
+        {
             InvokeAsync(() => StateHasChanged());
         };
     }

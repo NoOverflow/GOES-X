@@ -11,12 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 builder.Services.AddSingleton<IQueryService, QueryService>((provider) =>
     new QueryService(
-        new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1)));
+        new AmazonS3Client(new Amazon.Runtime.AnonymousAWSCredentials(), Amazon.RegionEndpoint.USEast1), "E:/storage"));
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<UserPreferencesService>();
+builder.Services.AddScoped<AnimationService>();
 
 var app = builder.Build();
 

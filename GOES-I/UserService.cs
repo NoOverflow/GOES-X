@@ -12,6 +12,9 @@ namespace GOES_I
         {
             EndUserProducts.IEndUserProduct eup = EndUserProducts.EndUserProducts.FromName(productName);
             string hCachePath = QueryService.GetCachePath(timestamp);
+
+            if (!Directory.Exists(hCachePath))
+                throw new Exception("No matching product for this timestamp");
             IEnumerable<string> minDirectories = Directory.EnumerateDirectories(hCachePath);
             string closestMinPath = String.Empty;
             int closestMinOffset = 0;
@@ -19,7 +22,8 @@ namespace GOES_I
             // Get closest available timestamp eup
             foreach (var dir in minDirectories)
             {
-                int minute = Convert.ToInt32(Path.GetDirectoryName(dir));
+                string dirName = Path.GetFileName(dir);
+                int minute = Convert.ToInt32(dirName);
 
                 if (closestMinPath == String.Empty || Math.Abs(timestamp.Minute - minute) < closestMinOffset)
                 {
@@ -28,7 +32,7 @@ namespace GOES_I
                 }
             }
             if (closestMinPath == String.Empty)
-                throw new Exception("No maching product for this timestamp");
+                throw new Exception("No matching product for this timestamp");
             return eup.Get(closestMinPath);
         }
     }

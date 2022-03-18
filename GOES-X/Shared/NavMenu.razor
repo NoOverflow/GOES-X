@@ -2,6 +2,7 @@
 @using GOES_X.Services
 @inject UserPreferencesService UserPrefsService
 @inject IJSRuntime JsRuntime
+@inject AnimationService AnimationService
 
 <div class="@Style navbar">
     <h2>GOES-X</h2>
@@ -31,7 +32,7 @@
                 } 
                 else
                 {
-                    <input type="datetime-local" class="date-picker" id="datepicker" @onchange="OnDateSelectionChange" 
+                    <input type="datetime-local" class="date-picker" id="datepicker" @onchange="OnStartTimeDateSelectionChange" 
                         name="start-time" value="@Preferences.DataTimings.StartTime.ToString("yyyy-MM-ddTHH:mm")"/>
                 }
             </div>
@@ -55,19 +56,15 @@
                     <option value="@i">@GOES_X.Model.EndUserProduct.Products[i].Name</option>
                 }
             </select>
-
-            
         </div>
 
         <div id="animation">
             <h3>Animation Manager</h3>
             <div class="separator"></div>
-            <h4>Number of frames</h4>
-            <select class="sett-select small-select" id="numframes-select" @bind="@Preferences.Animation.NumberOfFrames">
-            </select>
-            <h4>Intra-frame time</h4>
-            <select class="sett-select small-select" id="iframe-time-select" @bind="@Preferences.Animation.IntraFrameTime">
-            </select>
+            <h4>End timestamp</h4>
+            <input type="datetime-local" class="date-picker" id="datepicker"
+                        name="start-time" @bind="@AnimationEndDateTime"/>
+            <button class="sett-button" @onclick="OnAnimationApplyButtonClicked">Apply</button>
             <button class="sett-button">Save the animation</button>
         </div>
     }
@@ -81,6 +78,8 @@
 
     public UserPreferences? Preferences { get; set; } = null;
 
+    public DateTime AnimationEndDateTime { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         UserPrefsService.OnUserPreferencesUpdate += async () =>
@@ -89,7 +88,14 @@
             InvokeAsync(() => StateHasChanged());
         };
         Preferences = await UserPrefsService.GetPreferencesAsync();
-        
+    }
+
+    private void OnAnimationApplyButtonClicked()
+    {
+        DateTime beginDate = Preferences.DataTimings.StartTime < AnimationEndDateTime ? Preferences.DataTimings.StartTime : AnimationEndDateTime;
+        DateTime endDate = Preferences.DataTimings.StartTime > AnimationEndDateTime ? Preferences.DataTimings.StartTime : AnimationEndDateTime;
+
+        AnimationService.Start(TimeSpan.FromSeconds(1), beginDate, endDate);
     }
 
     private void OnRealtimeCheckboxChange()
@@ -100,17 +106,12 @@
         InvokeAsync(() => StateHasChanged());
     }
 
-    private void OnDateSelectionChange(ChangeEventArgs e)
+    private void OnStartTimeDateSelectionChange(ChangeEventArgs e)
     {
         Preferences.DataTimings.StartTime = DateTime.Parse((string)e.Value);
         UserPrefsService.SavePreferencesAsync(Preferences);
         UserPrefsService.TriggerUpdateEvent();
         InvokeAsync(() => StateHasChanged());
-    }
-
-    private void ConstraintDateChange()
-    {
-        
     }
 
     public async void OnProductSelectionChange(ChangeEventArgs e)
