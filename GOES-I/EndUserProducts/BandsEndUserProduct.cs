@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -22,12 +23,13 @@ namespace GOES_I.EndUserProducts
         {
             short[,] rawRad = (short[,])mcmipfProduct.InternalDataSet[String.Format("CMI_C{0:00}", bandIndex)].GetData();
             double[,] rad = new double[rawRad.GetLength(0), rawRad.GetLength(1)];
-            float radSf = (float)mcmipfProduct.InternalDataSet[String.Format("CMI_C{0:00}", bandIndex)].Metadata["scale_factor"];
+            float radScaleOffset = (float)mcmipfProduct.InternalDataSet[String.Format("CMI_C{0:00}", bandIndex)].Metadata["scale_factor"];
+            float radAddOffset = (float)mcmipfProduct.InternalDataSet[String.Format("CMI_C{0:00}", bandIndex)].Metadata["scale_factor"];
 
             for (int y = 0; y < rad.GetLength(0); y++)
                 for (int x = 0; x < rad.GetLength(1); x++)
-                    rad[y, x] = rawRad[y, x];
-            Utils.ImageUtils.CreateImage(rad, gamma: 1.6, transparencyKey: -1).Save(Path.Combine(storagePath, $"Band{bandIndex}.png"), ImageFormat.Png);
+                    rad[y, x] = rawRad[y, x] * radScaleOffset + radAddOffset;
+            Utils.ImageUtils.CreateImage(rad, gamma: 1.6, transparencyKey: -1).SaveAsPng(Path.Combine(storagePath, $"Band{bandIndex}.png"));
         }
 
         public bool IsProcessComplete(string basePath)

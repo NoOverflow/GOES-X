@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -29,6 +30,7 @@ namespace GOES_I.EndUserProducts
             return true;
         }
 
+        // TODO: Replace using GeoColor from CIRA
         public async Task Process(string basePath)
         {
             Product mcmipf;
@@ -50,16 +52,20 @@ namespace GOES_I.EndUserProducts
             float bScaleFactor = (float)mcmipf.InternalDataSet["CMI_C03"].Metadata["scale_factor"];
             float gScaleFactor = (float)mcmipf.InternalDataSet["CMI_C01"].Metadata["scale_factor"];
 
+            float rAddFactor = (float)mcmipf.InternalDataSet["CMI_C02"].Metadata["add_offset"];
+            float bAddFactor = (float)mcmipf.InternalDataSet["CMI_C03"].Metadata["add_offset"];
+            float gAddFactor = (float)mcmipf.InternalDataSet["CMI_C01"].Metadata["add_offset"];
+
             for (int y = 0; y < rawG.GetLength(0); y++)
             {
                 for (int x = 0; x < rawG.GetLength(1); x++)
                 {
-                    r[y, x] = (double)(rawR[y, x] * rScaleFactor);
-                    b[y, x] = (double)(rawB[y, x] * bScaleFactor);
-                    g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor));
+                    r[y, x] = (double)(rawR[y, x] * rScaleFactor + rAddFactor);
+                    b[y, x] = (double)(rawB[y, x] * bScaleFactor + bAddFactor);
+                    g[y, x] = (double)(0.48358168 * r[y, x] + 0.45706946 * b[y, x] + 0.06038137 * (rawG[y, x] * gScaleFactor + bAddFactor));
                 }
             }
-            GOES_I.Utils.ImageUtils.CreateRGBImage(r, g, b, gamma: 1.8, -1).Save(Path.Combine(path, $"Color.png"), ImageFormat.Png);
+            GOES_I.Utils.ImageUtils.CreateRGBImage(r, g, b, gamma: 1.8, -1).SaveAsPng(Path.Combine(path, "Color.png"));
         }
 
         public bool HasRequirements(string rawProductsPath)
