@@ -1,6 +1,7 @@
 ﻿using GOES_I;
 using GOES_I.Animator;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace GOES_X.Controllers
 {
@@ -75,10 +76,13 @@ namespace GOES_X.Controllers
             if (startTimestamp >= endTimestamp)
                 return Problem("Invalid range");
             TimeSpan length = TimeSpan.FromTicks(endTimestamp - startTimestamp); 
-            string animationPath = EupAnimator.AnimateEup(productName, productIndex, new DateTime(startTimestamp), length);
-            byte[] data = System.IO.File.ReadAllBytes(animationPath);
+            string animationPath = EupAnimator.AnimateEup(productName, productIndex, new DateTime(endTimestamp), length);
+            Console.WriteLine(animationPath);
+            var fileResponse = PhysicalFile(animationPath, "video/mp4");
 
-            return File(data, "video/mp4");
+            fileResponse.EnableRangeProcessing = true;
+            fileResponse.FileDownloadName = "video.mp4"; // rename original filename, just for testing
+            return fileResponse;
         }
 
         /*[HttpGet]

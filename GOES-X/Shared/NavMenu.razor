@@ -3,6 +3,7 @@
 @inject UserPreferencesService UserPrefsService
 @inject IJSRuntime JsRuntime
 @inject AnimationService AnimationService
+@inject NavigationManager NavigationManager
 
 <div class="@Style navbar">
     <h2>GOES-X</h2>
@@ -65,7 +66,9 @@
             <input type="datetime-local" class="date-picker" id="datepicker"
                         name="start-time" @bind="@AnimationEndDateTime"/>
             <button class="sett-button" @onclick="OnAnimationApplyButtonClicked">Apply</button>
-            <button class="sett-button">Save the animation</button>
+            <button @onclick="Rock">Rock</button>
+            <button @onclick="Loop">Loop</button>
+            <button @onclick="OnePass">One Pass</button>
         </div>
     }
 </div>
@@ -80,6 +83,21 @@
 
     public DateTime AnimationEndDateTime { get; set; }
 
+    private void Loop()
+    {
+        AnimationService.AnimationMode = AnimationMode.Loop;
+    }
+
+    private void Rock()
+    {
+        AnimationService.AnimationMode = AnimationMode.Rock;
+    }
+
+    private void OnePass()
+    {
+        AnimationService.AnimationMode = AnimationMode.OnePass;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         UserPrefsService.OnUserPreferencesUpdate += async () =>
@@ -88,6 +106,11 @@
             InvokeAsync(() => StateHasChanged());
         };
         Preferences = await UserPrefsService.GetPreferencesAsync();
+    }
+
+    private void OnAnimationDownloadButtonClicked()
+    {
+        NavigationManager.NavigateTo($"/api/animate?productName=Color&productIndex=Color&startTimestamp={AnimationService.BeginDate.Ticks}&endTimestamp={AnimationService.EndDate.Ticks}");
     }
 
     private void OnAnimationApplyButtonClicked()
