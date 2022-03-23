@@ -28,6 +28,8 @@ html, body {
     padding: 0;
     position: absolute;
     background-color: black;
+
+    overflow: hidden;
 }
 
 a, .btn-link {
@@ -79,3 +81,4 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+

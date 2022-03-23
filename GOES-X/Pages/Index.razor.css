@@ -1,28 +1,4 @@
-﻿#temp-visualizer {
-
-}
-
-    
-
-#temp-visualizer > img {
-
-    position: absolute;
-    margin: auto;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    width: auto;
-    bottom: 0px;
-    max-height: calc(100% - 50px);
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-
-    #temp-visualizer > img:focus {
-        outline: none;
-    }
-
-#menu-button {
+﻿#menu-button {
     z-index: 2;
     background: none;
     color: inherit;
@@ -31,6 +7,10 @@
     font: inherit;
     cursor: pointer;
     outline: inherit;
+}
+.ui {
+    position: relative;
+    z-index: 2;
 }
 
 .topbar {

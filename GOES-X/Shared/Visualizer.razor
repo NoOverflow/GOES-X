@@ -1,0 +1,123 @@
+﻿@using GOES_X.Model
+@using GOES_X.Services
+@using SixLabors.ImageSharp
+
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+@inject AnimationService AnimationService
+@inject UserPreferencesService UserPreferencesService
+
+@if (Preferences is null)
+{
+    <h2>Loading preferences...</h2>
+}
+else
+{
+    <div class="visualizer"
+        @onkeypress="OnImgVisualizerKeyPress" 
+    >
+        <div id="visualizer-content">
+            @foreach (var eup in Preferences.SelectedProducts)
+            {
+                @if (IsVisualizerImgAvailable(eup))
+                {
+                    <img 
+                        tabindex="0" 
+                        style="transform: rotate(@(RotationAngle)deg) translate(@(Translation.X)px, @(Translation.Y)px); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));"
+                        src="@(BuildEupUrl(eup))" 
+                    />
+                } 
+                else
+                {
+                    <p class="eup-error">@(eup.Name) is unavailable for this timestamp (@(GetTimestamp().ToShortDateString() + " - " + GetTimestamp().ToShortTimeString()))</p>
+                }
+            }
+        </div>
+    </div>
+}
+
+@code {
+    public UserPreferences? Preferences { get; set; } = null;
+    public int RotationAngle { get; set; } = 0;
+    public PointF Translation = new PointF(0, 0);
+    public PointF TranslationOffset = new PointF(0, 0);
+    public bool Dragging { get; set; } = false;
+
+    private void OnMouseDown(MouseEventArgs e)
+    {
+        TranslationOffset = new PointF((float)e.OffsetX, (float)e.OffsetY);
+        Dragging = true;
+        JsRuntime.InvokeVoidAsync("LockPointer");
+    }
+
+    private void OnMouseUp()
+    {
+        Dragging = false;
+        JsRuntime.InvokeVoidAsync("ReleasePointer");
+    }
+
+    private void OnMouseMove(MouseEventArgs e)
+    {
+        if (!Dragging)
+            return;
+        Translation.X = (float)e.ScreenX - TranslationOffset.X;
+        Translation.Y = (float)e.ScreenY - TranslationOffset.Y;
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Preferences = await UserPreferencesService.GetPreferencesAsync();
+        UserPreferencesService.OnUserPreferencesUpdate += async () =>
+        {
+            Preferences = await UserPreferencesService.GetPreferencesAsync();
+            InvokeAsync(() => StateHasChanged());
+        };
+        AnimationService.OnAnimationTick += (DateTime currentDate) =>
+        {
+            InvokeAsync(() => StateHasChanged());
+        };
+        
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        JsRuntime.InvokeVoidAsync("InitControls");
+        base.OnAfterRender(firstRender);
+    }
+
+    private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
+    {
+        return NavigationManager.BaseUri + $"api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp().Ticks.ToString()}";
+    }
+
+    public bool IsVisualizerImgAvailable(GOES_X.Model.EndUserProduct eup)
+    {
+        HttpClient client = ClientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Options, BuildEupUrl(eup));
+        var response = client.Send(request);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    private DateTime GetTimestamp()
+    {
+        if (AnimationService.AnimationRunning)
+            return AnimationService.CurrentDate;
+        else if (Preferences != null)
+            return Preferences.DataTimings.Realtime ? DateTime.UtcNow : Preferences.DataTimings.StartTime;    
+        else
+            return DateTime.UtcNow;
+    }
+
+    private void OnImgVisualizerKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key != "r")
+            return;
+        RotationAngle += 45;
+        if (RotationAngle >= 360)
+            RotationAngle = 0;
+    }
+}

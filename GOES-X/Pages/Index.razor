@@ -6,9 +6,8 @@
 @inject AnimationService AnimationService
 @inject IJSRuntime JsRuntime
 @inject IHttpClientFactory ClientFactory
-@inject NavigationManager NavigationManager
 
-<div class="topbar">
+<div class="topbar ui">
     <h1>@SatelliteName</h1>
    
     <button @onclick="ToggleMenu" id="menu-button">
@@ -19,55 +18,18 @@
         </svg>
     </button>
 </div>
-<h4>@(GetTimestamp().ToString("dd/MM/yy - HH:mm"))</h4>
+<h4 class="ui">@(GetTimestamp().ToString("dd/MM/yy - HH:mm"))</h4>
 <NavMenu Style="@MenuStyleCSS" />
 
-<div id="temp-visualizer">
-    @if (Preferences is null)
-    {
-        <h2>Loading preferences...</h2>
-    }
-    else
-    {
-        @foreach (var eup in Preferences.SelectedProducts)
-        { 
-            @if (IsVisualizerImgAvailable(eup))
-            {
-                <img tabindex="0" @onkeypress="OnImgVisualizerKeyPress" style="transform-origin: center; transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));" src="@(BuildEupUrl(eup))" />
-            } 
-            else
-            {
-                <p>@(eup.Name) is unavailable for this timestamp (@(GetTimestamp().ToShortDateString() + " - " + GetTimestamp().ToShortTimeString()))</p>
-            }
-        }
-    }
-</div>
+<Visualizer />
+
 
 @code {
     public bool MenuVisible = false;
     public string MenuStyleCSS => (MenuVisible ? "show" : "collapse");
     public static DateTime EupTimestamp = DateTime.UtcNow.AddHours(-1);
     public string SatelliteName { get; set; } = "GOES 17";
-    public int RotationAngle { get; set; } = 0;
     public UserPreferences? Preferences { get; set; } = null;
-
-    private void OnImgVisualizerKeyPress(KeyboardEventArgs e)
-    {
-        if (e.Key != "r")
-            return;
-        RotationAngle += 45;
-        if (RotationAngle >= 360)
-            RotationAngle = 0;
-    }
-
-    public bool IsVisualizerImgAvailable(GOES_X.Model.EndUserProduct eup)
-    {
-        HttpClient client = ClientFactory.CreateClient();
-        var request = new HttpRequestMessage(HttpMethod.Options, BuildEupUrl(eup));
-        var response = client.Send(request);
-
-        return response.IsSuccessStatusCode;
-    }
 
     private DateTime GetTimestamp()
     {
@@ -79,27 +41,12 @@
             return DateTime.UtcNow;
     }
 
-    private string BuildEupUrl(GOES_X.Model.EndUserProduct eup)
-    {
-        return NavigationManager.BaseUri + $"api/eup?eupName={eup.EupName}&key={eup.EupIndexName}&timestamp={GetTimestamp().Ticks.ToString()}";
-    }
-
     protected override async Task OnInitializedAsync()
     {
         Preferences = await UserPreferencesService.GetPreferencesAsync();
-        JsRuntime.InvokeAsync<object>("CreateViewer", null);
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
         UserPreferencesService.OnUserPreferencesUpdate += async () =>
         {
             Preferences = await UserPreferencesService.GetPreferencesAsync();
-            InvokeAsync(() => StateHasChanged());
-        };
-        AnimationService.OnAnimationTick += (DateTime currentDate) =>
-        {
             InvokeAsync(() => StateHasChanged());
         };
     }

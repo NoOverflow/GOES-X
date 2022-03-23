@@ -211,6 +211,7 @@ li {
     background-color: transparent;
     border: 1px solid #4A4A4A;
     border-radius: 4px;
+    padding: 10px;
 }
 
 #numframes-select {

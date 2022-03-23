@@ -1,0 +1,49 @@
+﻿.visualizer {
+    position: absolute;
+    margin: auto;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: auto;
+    bottom: 0px;
+}
+
+#visualizer-content {
+
+}
+
+.eup-error {
+    display: flex;
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    margin: auto;
+
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+
+img {
+    position: absolute;
+    margin: auto;
+    left: 0px;
+    top: 0px;
+    width: auto;
+    max-height: calc(100vh - 50px);
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+    img:focus {
+        outline: none;
+    }
