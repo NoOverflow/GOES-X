@@ -41,18 +41,22 @@ InitControls = () => {
         return;
     console.log("Visualizer ", zoom);
 
-    zoom.onmousedown = function (e) {
+    zoom.onpointerdown = function (e) {
         console.log("omd");
         e.preventDefault();
         start = { x: e.clientX - pointX, y: e.clientY - pointY };
         panning = true;
     }
 
-    zoom.onmouseup = function (e) {
+    zoom.onpointerup = function (e) {
         panning = false;
     }
 
-    zoom.onmousemove = function (e) {
+    zoom.onpointerout = function (e) {
+        panning = false;
+    }
+        
+    zoom.onpointermove = function (e) {
         e.preventDefault();
         if (!panning) {
             return;

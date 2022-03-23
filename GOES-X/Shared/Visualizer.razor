@@ -18,7 +18,7 @@ else
     <div class="visualizer"
         @onkeypress="OnImgVisualizerKeyPress" 
     >
-        <div id="visualizer-content">
+        <div id="visualizer-content" draggable="true">
             @foreach (var eup in Preferences.SelectedProducts)
             {
                 @if (IsVisualizerImgAvailable(eup))
