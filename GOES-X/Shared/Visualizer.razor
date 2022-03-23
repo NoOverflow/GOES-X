@@ -25,7 +25,7 @@ else
                 {
                     <img 
                         tabindex="0" 
-                        style="transform: rotate(@(RotationAngle)deg) translate(@(Translation.X)px, @(Translation.Y)px); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));"
+                        style="transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));"
                         src="@(BuildEupUrl(eup))" 
                     />
                 } 
@@ -41,31 +41,6 @@ else
 @code {
     public UserPreferences? Preferences { get; set; } = null;
     public int RotationAngle { get; set; } = 0;
-    public PointF Translation = new PointF(0, 0);
-    public PointF TranslationOffset = new PointF(0, 0);
-    public bool Dragging { get; set; } = false;
-
-    private void OnMouseDown(MouseEventArgs e)
-    {
-        TranslationOffset = new PointF((float)e.OffsetX, (float)e.OffsetY);
-        Dragging = true;
-        JsRuntime.InvokeVoidAsync("LockPointer");
-    }
-
-    private void OnMouseUp()
-    {
-        Dragging = false;
-        JsRuntime.InvokeVoidAsync("ReleasePointer");
-    }
-
-    private void OnMouseMove(MouseEventArgs e)
-    {
-        if (!Dragging)
-            return;
-        Translation.X = (float)e.ScreenX - TranslationOffset.X;
-        Translation.Y = (float)e.ScreenY - TranslationOffset.Y;
-
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,7 +54,6 @@ else
         {
             InvokeAsync(() => StateHasChanged());
         };
-        
     }
 
     protected override void OnAfterRender(bool firstRender)
