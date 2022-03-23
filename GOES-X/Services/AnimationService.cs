@@ -14,7 +14,9 @@ namespace GOES_X.Services
         public delegate void OnAnimationTickDelegate(DateTime currentDate);
         public event OnAnimationTickDelegate? OnAnimationTick;
 
-        public TimeSpan Interval { get; private set; }
+        private TimeSpan CurrentInterval { get; set; } = TimeSpan.FromSeconds(1);
+        public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(1);
+
         public bool AnimationRunning { get; private set; }
         public AnimationMode AnimationMode { get; set; }
 
@@ -29,8 +31,16 @@ namespace GOES_X.Services
         /// </summary>
         private bool RockSide = true;
 
+        /// <summary>
+        /// Is the animation currently paused ?
+        /// </summary>
+        public bool Paused { get; private set; }
+
         private void AnimationThreadLogic(object? state)
         {
+            if (Paused)
+                return;
+
             CurrentDate = CurrentDate.AddMinutes(AnimationMode == AnimationMode.Rock ? (RockSide ? 10 : -10) : 10);
 
             if (CurrentDate > EndDate)
@@ -57,6 +67,11 @@ namespace GOES_X.Services
                 CurrentDate = BeginDate;
             }
             this.OnAnimationTick?.Invoke(this.CurrentDate);
+            if (this.CurrentInterval != this.Interval)
+            {
+                this.CurrentInterval = this.Interval;
+                this.AnimationTimer?.Change(this.Interval.Milliseconds, this.Interval.Milliseconds);
+            }
         }
 
         public void Start(TimeSpan interval, DateTime beginDate, DateTime endDate)
@@ -66,7 +81,7 @@ namespace GOES_X.Services
                 this.AnimationRunning = false;
                 this.AnimationTimer?.Dispose();
             }
-            this.Interval = interval;
+            this.Interval = CurrentInterval = interval;
             this.BeginDate = this.CurrentDate = beginDate;
             this.EndDate = endDate;
             this.AnimationRunning = true;
@@ -77,6 +92,16 @@ namespace GOES_X.Services
         {
             this.AnimationRunning = false;
             this.AnimationTimer?.Dispose();
+        }
+
+        public void Pause()
+        {
+            this.Paused = true;
+        }
+
+        public void Resume()
+        {
+            this.Paused = false;
         }
     }
 }

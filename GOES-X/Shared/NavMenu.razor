@@ -65,10 +65,14 @@
             <h4>End timestamp</h4>
             <input type="datetime-local" class="date-picker" id="datepicker"
                         name="start-time" @bind="@AnimationEndDateTime"/>
+            <h4>Image interval (ms)</h4>
+            <input type="number" value="@(AnimationService.Interval.Milliseconds)" min="100" @onchange="OnImageIntervalChange" />
             <button class="sett-button" @onclick="OnAnimationApplyButtonClicked">Apply</button>
-            <button @onclick="Rock">Rock</button>
-            <button @onclick="Loop">Loop</button>
-            <button @onclick="OnePass">One Pass</button>
+            <button @onclick="() => AnimationService.AnimationMode = AnimationMode.Rock">Rock</button>
+            <button @onclick="() => AnimationService.AnimationMode = AnimationMode.Loop">Loop</button>
+            <button @onclick="() => AnimationService.AnimationMode = AnimationMode.OnePass">One Pass</button>
+            <button @onclick="() => AnimationService.Pause()">Pause</button>
+            <button @onclick="() => AnimationService.Resume()">Resume</button>
         </div>
     }
 </div>
@@ -82,21 +86,6 @@
     public UserPreferences? Preferences { get; set; } = null;
 
     public DateTime AnimationEndDateTime { get; set; }
-
-    private void Loop()
-    {
-        AnimationService.AnimationMode = AnimationMode.Loop;
-    }
-
-    private void Rock()
-    {
-        AnimationService.AnimationMode = AnimationMode.Rock;
-    }
-
-    private void OnePass()
-    {
-        AnimationService.AnimationMode = AnimationMode.OnePass;
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -151,4 +140,10 @@
         InvokeAsync(() => StateHasChanged());
     }
 
+    private void OnImageIntervalChange(ChangeEventArgs e)
+    {
+        if (e.Value == null)
+            return;
+        AnimationService.Interval = TimeSpan.FromMilliseconds(Convert.ToDouble((string)e.Value));
+    }
 }
