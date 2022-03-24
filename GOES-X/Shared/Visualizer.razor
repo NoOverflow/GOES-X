@@ -15,17 +15,15 @@
 }
 else
 {
-    <div class="visualizer"
-        @onkeypress="OnImgVisualizerKeyPress" 
-    >
-        <div id="visualizer-content" draggable="true">
+    <div class="visualizer">
+        <div id="visualizer-content" draggable="true" >
             @foreach (var eup in Preferences.SelectedProducts)
             {
                 @if (IsVisualizerImgAvailable(eup))
                 {
                     <img 
                         tabindex="0" 
-                        style="transform: rotate(@(RotationAngle)deg); opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));"
+                        style="opacity: @(eup.Opacity.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));"
                         src="@(BuildEupUrl(eup))" 
                     />
                 } 
@@ -84,14 +82,5 @@ else
             return Preferences.DataTimings.Realtime ? DateTime.UtcNow : Preferences.DataTimings.StartTime;    
         else
             return DateTime.UtcNow;
-    }
-
-    private void OnImgVisualizerKeyPress(KeyboardEventArgs e)
-    {
-        if (e.Key != "r")
-            return;
-        RotationAngle += 45;
-        if (RotationAngle >= 360)
-            RotationAngle = 0;
     }
 }

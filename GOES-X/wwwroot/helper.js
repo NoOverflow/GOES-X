@@ -6,6 +6,7 @@ var scale = 1,
     panning = false,
     pointX = 0,
     pointY = 0,
+    rotAngle = 0,
     start = { x: 0, y: 0 },
     zoom;
 
@@ -29,6 +30,10 @@ ReleasePointer = () => {
 
 
 function setTransform() {
+    for (let i = 0; i < zoom.children.length; i++) {
+        zoom.children[i].style.transformOrigin = "center center";
+        zoom.children[i].style.transform = "rotate(" + rotAngle + "deg)";
+    }
     zoom.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
@@ -36,7 +41,7 @@ InitControls = () => {
     console.log("Initializing controls");
 
     zoom = document.getElementById("visualizer-content")
-    
+
     if (zoom.children[0].localName == 'p')
         return;
     console.log("Visualizer ", zoom);
@@ -55,7 +60,7 @@ InitControls = () => {
     zoom.onpointerout = function (e) {
         panning = false;
     }
-        
+
     zoom.onpointermove = function (e) {
         e.preventDefault();
         if (!panning) {
@@ -76,6 +81,15 @@ InitControls = () => {
         pointX = e.clientX - xs * scale;
         pointY = e.clientY - ys * scale;
 
+        setTransform();
+    }
+
+    document.onkeyup = function (e) {
+        if (!zoom || e.key != "r")
+            return;
+        rotAngle += 45;
+        if (rotAngle > 360)
+            rotAngle = 0;
         setTransform();
     }
 };
